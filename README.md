@@ -1,2 +1,2 @@
-# mdl
+# mddl
 markdown documentation language
