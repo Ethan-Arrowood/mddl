@@ -1,13 +1,13 @@
-# Style Guide
+# Spec
 
 ## Method
 
 The base syntax for a **Method** definition starts with a [**Method Title**](#method-title) and ends with a [**Return Line**](#return-line)
 
 ```md
-<Method Title>
+<MethodTitle>
 
-<Return Line>
+<ReturnLine>
 ```
 
 Example:
