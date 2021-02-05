@@ -1,0 +1,51 @@
+Identifier :
+	> Any valid JavaScript identifier
+
+Type :
+	> Any valid TypeScript type
+
+Value :
+	> Any valid JavaScript value that is assignable to the associated Type
+
+Description :
+	> A single-line description. Supports markdown syntax.
+
+// Parameter :
+//   `* **`Identifier`**` ```Type```
+//   `* **`Identifier`**` ```Type``` `-` Description
+//   `* **`Identifier`**` ```Type``` `(optional)`
+//   `* **`Identifier`**` ```Type``` `(optional)` `-` Description
+//   `* **`Identifier`**` ```Type``` `- Default` ```Value```
+//   `* **`Identifier`**` ```Type``` `- Default` ```Value``` `-` Description
+//   `* **`Identifier`**` ```Type``` `(optional)` `- Default` ```Value```
+//   `* **`Identifier`**` ```Type``` `(optional)` `- Default` ```Value``` `-` Description
+
+DefaultValue : `Default` ```Value```
+
+ParameterBase : `*` `**`Identifier`**` ```Type```
+
+ParameterWithDefaultValue : ParameterBase `-` DefaultValue
+
+ParameterWithDescription :
+	ParameterBase `-` Description
+	ParameterWithDefaultValue `-` Description
+
+Parameter :
+	ParameterBase
+	ParameterWithDefaultValue
+	ParameterWithDescription
+
+ArgumentBase :
+	ParameterBase
+	ParameterBase `(optional)`
+
+ArgumentWithDefaultValue : ArgumentBase `-` DefaultValue
+
+ArgumentWithDescription :
+	ArgumentBase `-` Description
+	ArgumentWithDefaultValue `-` Description
+
+Argument :
+	ArgumentBase
+	ArgumentWithDefaultValue
+	ArgumentWithDescription

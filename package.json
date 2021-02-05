@@ -1,0 +1,23 @@
+{
+  "name": "mddl",
+  "version": "1.0.0",
+  "description": "markdown documentation language",
+  "main": "index.js",
+  "scripts": {
+    "build": "grammarkdown markdownd.grammar"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ethan-Arrowood/mdl.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ethan-Arrowood/mdl/issues"
+  },
+  "homepage": "https://github.com/Ethan-Arrowood/mdl#readme",
+  "dependencies": {
+    "grammarkdown": "^3.1.1"
+  }
+}
