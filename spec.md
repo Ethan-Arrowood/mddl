@@ -1,5 +1,106 @@
 # Spec
 
+## Identifier
+
+Any valid JavaScript identifier
+
+## Type
+
+Any valid TypeScript type
+
+## Value
+
+Any valid JavaScript value. Should be assignable to an associated [**Type**](#type).
+
+## SingleLineDescription
+
+A markdown-based single-line description.
+
+## MultiLineDescription
+
+A markdown-based multi-line description
+
+## DefaultValue
+
+For use with [**ParameterWithDefaultValue**](#parameterwithdefaultvalue).
+
+Syntax:
+
+```md
+Default `<Value>`
+```
+
+Ref: [Value](#value)
+
+## ParameterBase
+
+Syntax:
+
+```md
+* **<Identifier>** `<Type>`
+```
+
+Ref: [Identifier](#identifier), [Type](#type)
+
+Example:
+
+```md
+* **text** `string`
+```
+
+## ParameterWithDefaultValue
+
+Syntax:
+
+```md
+<ParameterBase> - <DefaultValue>
+```
+
+Ref: [ParameterBase](#parameterbase), [DefaultValue](#defaultvalue)
+
+Example:
+
+```md
+* **text** `string` - Default: `'mddl'`
+```
+
+## ParameterWithDescription
+
+Syntax:
+
+```md
+<ParameterBase> - <SingleLineDescription>
+```
+
+```md
+<ParameterWithDefaultValue> - <SingleLineDescription>
+```
+
+Ref: [ParameterBase](#parameterbase), [SingleLineDescription](#singlelinedescription), [ParameterWithDefaultValue](#parameterwithdefaultvalue)
+
+Example:
+
+```md
+* **text** `string` - The text property
+```
+
+```md
+* **text** `string` - Default: `'mddl'` - The text property
+```
+
+## SingleLineParameter
+
+A [**ParameterBase**](#parameterbase), [**ParameterWithDefaultValue**](#parameterwithdefaultvalue), or [**ParameterWithDescription](#parameterwithdescription) that **do not** have a [**Type**](#type) of `object`.
+
+## ObjectParameter
+
+A [**ParameterBase**](#parameterbase), [**ParameterWithDefaultValue**](#parameterwithdefaultvalue), or [**ParameterWithDescription](#parameterwithdescription) that has a [**Type**](#type) of `object`.
+
+## MultiLineParameter
+## Parameter
+
+
+
 ## Method
 
 The base syntax for a **Method** definition starts with a [**MethodTitle**](#method-title) and ends with a [**ReturnLine**](#return-line)

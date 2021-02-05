@@ -22,30 +22,48 @@ Description :
 
 DefaultValue : `Default` ```Value```
 
-ParameterBase : `*` `**`Identifier`**` ```Type```
+_ParameterBase : `*` `**`Identifier`**` ```Type```
 
-ParameterWithDefaultValue : ParameterBase `-` DefaultValue
+ParameterBase[Object] :
+	_ParameterBase
+	[~Object] `*` `**`Identifier`**` ``` `object` ```
 
-ParameterWithDescription :
-	ParameterBase `-` Description
-	ParameterWithDefaultValue `-` Description
+ParameterWithDefaultValue[Object] : ParameterBase[?Object] `-` DefaultValue
 
-Parameter :
-	ParameterBase
-	ParameterWithDefaultValue
-	ParameterWithDescription
+ParameterWithDescription[Object] :
+	ParameterBase[?Object] `-` Description
+	ParameterWithDefaultValue[?Object] `-` Description
 
-ArgumentBase :
-	ParameterBase
-	ParameterBase `(optional)`
+ObjectParameter :
+	ParameterBase[+Object]
+	ParameterWithDefaultValue[+Object]
+	ParameterWithDescription[+Object]
 
-ArgumentWithDefaultValue : ArgumentBase `-` DefaultValue
+SingleLineParameter[Object] :
+	ParameterBase[?Object]
+	ParameterWithDefaultValue[?Object]
+	ParameterWithDescription[?Object]
 
-ArgumentWithDescription :
-	ArgumentBase `-` Description
-	ArgumentWithDefaultValue `-` Description
+MultiLineParameter ::
+	SingleLineParameter[+Object]
+	<TAB> Parameter
 
-Argument :
-	ArgumentBase
-	ArgumentWithDefaultValue
-	ArgumentWithDescription
+Parameter[Object] :
+	[~Object] SingleLineParameter
+
+	MultiLineParameter
+
+// ArgumentBase :
+// 	ParameterBase
+// 	ParameterBase `(optional)`
+
+// ArgumentWithDefaultValue : ArgumentBase `-` DefaultValue
+
+// ArgumentWithDescription :
+// 	ArgumentBase `-` Description
+// 	ArgumentWithDefaultValue `-` Description
+
+// Argument :
+// 	ArgumentBase
+// 	ArgumentWithDefaultValue
+// 	ArgumentWithDescription
