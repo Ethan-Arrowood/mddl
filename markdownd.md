@@ -27,11 +27,17 @@
 &emsp;&emsp;&emsp;<a name="SingleLineParameter-0e844aa1"></a>*[ParameterWithDefaultValue](#ParameterWithDefaultValue)*<sub>[?Object]</sub>  
 &emsp;&emsp;&emsp;<a name="SingleLineParameter-10deba02"></a>*[ParameterWithDescription](#ParameterWithDescription)*<sub>[?Object]</sub>  
   
-&emsp;&emsp;<a name="MultiLineParameter"></a>*MultiLineParameter*<sub>[Object]</sub> **::**  
-&emsp;&emsp;&emsp;<a name="MultiLineParameter-4d8c0f24"></a>*[SingleLineParameter](#SingleLineParameter)*<sub>[+Object]</sub>  
-&emsp;&emsp;&emsp;<a name="MultiLineParameter-96955a54"></a>&lt;TAB&gt;&emsp;*[Parameter](#Parameter)*<sub>[?Object]</sub>  
+&emsp;&emsp;<a name="ParameterList"></a>*ParameterList* **:** <a name="ParameterList-f699f295"></a>*[Parameter](#Parameter)*  
   
-&emsp;&emsp;<a name="Parameter"></a>*Parameter*<sub>[Object]</sub> **:**  
-&emsp;&emsp;&emsp;<a name="Parameter-c0200af6"></a>*[SingleLineParameter](#SingleLineParameter)*<sub>[?Object]</sub>  
-&emsp;&emsp;&emsp;<a name="Parameter-23431d4d"></a>*[MultiLineParameter](#MultiLineParameter)*<sub>[?Object]</sub>  
+&emsp;&emsp;<a name="ParameterList"></a>*ParameterList* **::**  
+&emsp;&emsp;&emsp;<a name="ParameterList-acdf35da"></a>*[ParameterList](#ParameterList)*  
+&emsp;&emsp;&emsp;<a name="ParameterList-f699f295"></a>*[Parameter](#Parameter)*  
+  
+&emsp;&emsp;<a name="MultiLineParameter"></a>*MultiLineParameter* **::**  
+&emsp;&emsp;&emsp;<a name="MultiLineParameter-4d8c0f24"></a>*[SingleLineParameter](#SingleLineParameter)*<sub>[+Object]</sub>  
+&emsp;&emsp;&emsp;<a name="MultiLineParameter-3e0f797d"></a>&lt;TAB&gt;&emsp;*[ParameterList](#ParameterList)*  
+  
+&emsp;&emsp;<a name="Parameter"></a>*Parameter* **:**  
+&emsp;&emsp;&emsp;<a name="Parameter-cbe5e6f7"></a>*[SingleLineParameter](#SingleLineParameter)*<sub>[~Object]</sub>  
+&emsp;&emsp;&emsp;<a name="Parameter-3aa6b7b9"></a>*[MultiLineParameter](#MultiLineParameter)*  
   

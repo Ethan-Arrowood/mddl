@@ -70,9 +70,7 @@ Syntax:
 
 ```md
 <ParameterBase> - <SingleLineDescription>
-```
-
-```md
+<!-- or -->
 <ParameterWithDefaultValue> - <SingleLineDescription>
 ```
 
@@ -82,24 +80,171 @@ Example:
 
 ```md
 * **text** `string` - The text property
-```
-
-```md
+<!-- or -->
 * **text** `string` - Default: `'mddl'` - The text property
 ```
 
 ## SingleLineParameter
 
-A [**ParameterBase**](#parameterbase), [**ParameterWithDefaultValue**](#parameterwithdefaultvalue), or [**ParameterWithDescription](#parameterwithdescription) that **do not** have a [**Type**](#type) of `object`.
+A [**ParameterBase**](#parameterbase), [**ParameterWithDefaultValue**](#parameterwithdefaultvalue), or [**ParameterWithDescription**](#parameterwithdescription) that **do not** have a [**Type**](#type) of `object`.
 
 ## ObjectParameter
 
-A [**ParameterBase**](#parameterbase), [**ParameterWithDefaultValue**](#parameterwithdefaultvalue), or [**ParameterWithDescription](#parameterwithdescription) that has a [**Type**](#type) of `object`.
+A [**ParameterBase**](#parameterbase), [**ParameterWithDefaultValue**](#parameterwithdefaultvalue), or [**ParameterWithDescription**](#parameterwithdescription) that has a [**Type**](#type) of `object`.
+
+## ParameterList
+
+Syntax:
+
+```md
+<Parameter>
+<!-- or -->
+<Parameter>
+<ParameterList>
+```
+
+Ref: [Parameter](#parameter), [ParameterList](#parameterlist)
 
 ## MultiLineParameter
+
+Syntax:
+
+```md
+<ObjectParameter>
+  <ParameterList>
+```
+
+Ref: [ObjectParameter](#objectparameter), [ParameterList](#parameterlist)
+
+Example:
+
+```md
+* **point** `object` - A representation of a 2D point
+  * **x** `number` - Default: `0`
+  * **y** `number` - Default: `0`
+```
+
 ## Parameter
 
+An alias for [**SingleLineParameter**](#singlelineparameter) or [**MultiLineParameter**](#multilineparameter)
 
+## ArgumentBase
+
+Syntax:
+
+```md
+<ParameterBase>
+<!-- or -->
+<ParameterBase> (optional)
+```
+
+Ref: [ParameterBase](#parameterbase)
+
+Example:
+
+```md
+* **text** `string`
+<!-- or -->
+* **text** `string` (optional)
+```
+
+## ArgumentWithDefaultValue
+
+Syntax:
+
+```md
+<ArgumentBase> - <DefaultValue>
+```
+
+Ref: [ArgumentBase](#argumentbase), [DefaultValue](#defaultvalue)
+
+Example:
+
+```md
+* **text** `string` - Default: `'mddl'`
+<!-- or -->
+* **text** `string` (optional) - Default: `'mddl'`
+```
+
+## ArgumentWithDescription
+
+Syntax:
+
+```md
+<ArgumentBase> - <Description>
+<!-- or -->
+<ArgumentWithDefaultValue> - <Description>
+```
+
+Ref: [ArgumentBase](#argumentbase), [Description](#description), [ArgumentWithDefaultValue](#argumentwithdefaultvalue)
+
+Example:
+
+```md
+* **text** `string` - A required text argument.
+
+* **text** `string` (optional) - An optional text argument.
+
+* **text** `string` - Default: `'mddl'` - A required text argument that defaults to `'mddl'`.
+
+* **text** `string` (optional) - Default: `'mddl'` - An optional text argument that defaults to `'mddl'`.
+```
+## SingleLineArgument
+
+An [**ArgumentBase**](#argumentbase), [**ArgumentWithDefaultValue**](#argumentwithdefaultvalue), or [**ArgumentWithDescription**](#argumentwithdescription) that **do not** have a [**Type**](#type) of `object`.
+
+## ObjectArgument
+
+An [**ArgumentBase**](#argumentbase), [**ArgumentWithDefaultValue**](#argumentwithdefaultvalue), or [**ArgumentWithDescription**](#argumentwithdescription) that has a [**Type**](#type) of `object`.
+
+## ArgumentList
+
+Syntax:
+
+```md
+<Argument>
+<!-- or -->
+<Argument>
+<ArgumentList>
+```
+
+Ref: [Parameter](#parameter), [ParameterList](#parameterlist)
+
+## MultiLineParameter
+
+Syntax:
+
+```md
+<ObjectParameter>
+  <ParameterList>
+```
+
+Ref: [ObjectParameter](#objectparameter), [ParameterList](#parameterlist)
+
+Example:
+
+```md
+* **point** `object` - A representation of a 2D point
+  * **x** `number` - Default: `0`
+  * **y** `number` - Default: `0`
+```
+
+
+## Argument
+
+Syntax:
+
+Ref:
+
+Example:
+
+## ArgumentList
+
+Syntax:
+
+Ref:
+
+Example:
 
 ## Method
 
