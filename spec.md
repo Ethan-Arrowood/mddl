@@ -189,6 +189,7 @@ Example:
 
 * **text** `string` (optional) - Default: `'mddl'` - An optional text argument that defaults to `'mddl'`.
 ```
+
 ## SingleLineArgument
 
 An [**ArgumentBase**](#argumentbase), [**ArgumentWithDefaultValue**](#argumentwithdefaultvalue), or [**ArgumentWithDescription**](#argumentwithdescription) that **do not** have a [**Type**](#type) of `object`.
@@ -208,18 +209,18 @@ Syntax:
 <ArgumentList>
 ```
 
-Ref: [Parameter](#parameter), [ParameterList](#parameterlist)
+Ref: [Argument](#argument), [ArgumentList](#argumentlist)
 
-## MultiLineParameter
+## MultiLineArgument
 
 Syntax:
 
 ```md
 <ObjectParameter>
-  <ParameterList>
+  <ArgumentList>
 ```
 
-Ref: [ObjectParameter](#objectparameter), [ParameterList](#parameterlist)
+Ref: [ObjectParameter](#objectparameter), [ArgumentList](#argumentlist)
 
 Example:
 
@@ -229,7 +230,6 @@ Example:
   * **y** `number` - Default: `0`
 ```
 
-
 ## Argument
 
 Syntax:
@@ -238,15 +238,8 @@ Ref:
 
 Example:
 
-## ArgumentList
 
-Syntax:
-
-Ref:
-
-Example:
-
-## Method
+<!-- ## Method
 
 The base syntax for a **Method** definition starts with a [**MethodTitle**](#method-title) and ends with a [**ReturnLine**](#return-line)
 
@@ -332,54 +325,4 @@ An overloaded method title starts with the same base syntax, excludes any argume
 ## (1) <MethodIdentifier>(<MethodArguments>)
 
 ## (1->N) <MethodIdentifier>(<MethodArguments>)
-```
-
-## ArgumentList
-
-An **ArgumentList** is a list of arguments for a given **Method**.
-
-The list should have a `Arguments:` on the first line, followed by a newline, and then followed by 1 or many [**ArgumentEntry**](#argument-entry) items.
-
-```md
-Arguments:
-
-<ArgumentEntry>
-```
-
-## ArgumentEntry
-
-An **ArgumentEntry** is a single line representation of an **ArgumentList** item.
-
-The base syntax for an entry is a markdown list item `*` that starts with the argument identifier in bold `**<ArgumentIdentifier>**` and is immediately followed by the argument type in back-ticks `` `<ArgumentType>` ``.
-
-```md
-* **<ArgumentIdentifier>** `<ArgumentType>`
-```
-
-An optional  follows the base syntax above, and is then followed with: `(optional)`.
-
-```md
-* **<ArgumentIdentifier>** `<ArgumentType>` (optional)
-```
-
-To denote the default value for an **Argument Entry** follow the base syntax or the optional syntax with: `` - Default: `<Default Value>` ``.
-
-```md
-* **<ArgumentIdentifier>** `<ArgumentType>` - Default: `<Default Value>`
-* **<ArgumentIdentifier>** `<ArgumentType>` (optional) - Default: `<Default Value>`
-```
-
-To denote an **Argument Entry** description follow the base syntax, optional syntax, or the default value syntax with: ` - <Description> `.
-
-```md
-* **<ArgumentIdentifier>** `<ArgumentType>` - <Description>
-* **<ArgumentIdentifier>** `<ArgumentType>` - Default: `<DefaultValue>` - <Description>
-* **<ArgumentIdentifier>** `<ArgumentType>` (optional) - Default: `<DefaultValue>` - <Description>
-```
-
-For `object` type **Argument Entry** items, indent the following lines and follow the same **Argument Entry** syntax as detailed above.
-
-```md
-* **<ArgumentIdentifier>** `object`
-  * <ArgumentEntry>
-```
+``` -->

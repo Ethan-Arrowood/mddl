@@ -10,15 +10,15 @@ Value :
 Description :
 	> A single-line description. Supports markdown syntax.
 
-// Parameter :
-//   `* **`Identifier`**` ```Type```
-//   `* **`Identifier`**` ```Type``` `-` Description
-//   `* **`Identifier`**` ```Type``` `(optional)`
-//   `* **`Identifier`**` ```Type``` `(optional)` `-` Description
-//   `* **`Identifier`**` ```Type``` `- Default` ```Value```
-//   `* **`Identifier`**` ```Type``` `- Default` ```Value``` `-` Description
-//   `* **`Identifier`**` ```Type``` `(optional)` `- Default` ```Value```
-//   `* **`Identifier`**` ```Type``` `(optional)` `- Default` ```Value``` `-` Description
+Parameter :
+  `*` `**` Identifier `**` ``` Type ```
+  `*` `**` Identifier `**` ``` Type ``` `-` Description
+  `*` `**` Identifier `**` ``` Type ``` `(optional)`
+  `*` `**` Identifier `**` ``` Type ``` `(optional)` `-` Description
+  `*` `**` Identifier `**` ``` Type ``` `- Default` ``` Value ```
+  `*` `**` Identifier `**` ``` Type ``` `- Default` ``` Value ``` `-` Description
+  `*` `**` Identifier `**` ``` Type ``` `(optional)` `- Default` ``` Value ```
+  `*` `**` Identifier `**` ``` Type ``` `(optional)` `- Default` ``` Value ``` `-` Description
 
 DefaultValue : `Default` ```Value```
 
