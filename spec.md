@@ -20,18 +20,6 @@ A markdown-based single-line description.
 
 A markdown-based multi-line description
 
-## DefaultValue
-
-For use with [**ParameterWithDefaultValue**](#parameterwithdefaultvalue).
-
-Syntax:
-
-```md
-Default `<Value>`
-```
-
-Ref: [Value](#value)
-
 ## ParameterBase
 
 Syntax:
@@ -47,6 +35,18 @@ Example:
 ```md
 * **text** `string`
 ```
+
+## DefaultValue
+
+For use with [**ParameterWithDefaultValue**](#parameterwithdefaultvalue).
+
+Syntax:
+
+```md
+Default `<Value>`
+```
+
+Ref: [Value](#value)
 
 ## ParameterWithDefaultValue
 

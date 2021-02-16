@@ -1,25 +1,88 @@
+LineTerminator ::
+	<LF>
+	<CR>
+	<LS>
+	<PS>
+
 Identifier :
 	> Any valid JavaScript identifier
 
 Type :
-	> Any valid TypeScript type
+	> Any valid TypeScript type except 'object'
 
 Value :
 	> Any valid JavaScript value that is assignable to the associated Type
 
-Description :
+SingleLineDescription :
 	> A single-line description. Supports markdown syntax.
 
+ParameterRest[Object] :
+	Type ```
+	[+Object] `object` ``` IndentedParameters?
+
 ParameterBase[Object] :
-	`*` `**`Identifier`**` ```Type```
-	[~Object] `*` `**`Identifier`**` ``` `object` ```
+	`*` `**` Identifier `**` ``` ParameterRest[?Object]
 
-SingleLineParameter[Object] : ParameterBase[?Object]
+DefaultValue :
+	`Default` ``` Value ```
 
-MultiLineParameter[Object] ::
-	SingleLineParameter[+Object]
-	<TAB> Parameter[?Object]
+ParameterWithDefaultValue :
+	ParameterBase[+Object] `-` DefaultValue
 
-Parameter[Object] :
-	SingleLineParameter[?Object]
-	MultiLineParameter[?Object]
+ParameterWithDescription :
+	ParameterBase[+Object] `-` SingleLineDescription
+	ParameterWithDefaultValue `-` SingleLineDescription
+
+Parameter :
+	LineTerminator ParameterBase[+Object]
+	LineTerminator ParameterWithDefaultValue
+	LineTerminator ParameterWithDescription
+
+IndentedParameters :
+	IndentedParameter
+	IndentedParameters IndentedParameter
+
+IndentedParameter :
+	LineTerminator <TAB> Parameter
+
+ParameterList :
+	Parameter
+	ParameterList Parameter
+
+ParameterHeading :
+	`##`
+	`###`
+	`####`
+
+ParameterBlock :
+	LineTerminator ParameterHeading `Parameter:` ``` Identifier ``` ParameterList
+
+ArgumentBase :
+	ParameterBase[+Object]
+	ParameterBase[+Object] `(optional)`
+
+ArgumentWithDefaultValue :
+	ArgumentBase `-` DefaultValue
+
+ArgumentWithDescription :
+	ArgumentBase `-` SingleLineDescription
+	ArgumentWithDefaultValue `-` SingleLineDescription
+
+Argument :
+	LineTerminator ArgumentBase
+	LineTerminator ArgumentWithDefaultValue
+	LineTerminator ArgumentWithDescription
+
+IndentedArguments :
+	IndentedArgument
+	IndentedArguments IndentedArgument
+
+IndentedArgument :
+	LineTerminator <TAB> Argument
+
+ArgumentList :
+	Argument
+	ArgumentList Argument
+
+ArgumentBlock :
+	LineTerminator `Arguments:` ArgumentList
