@@ -1,6 +1,6 @@
 # Function
 
-In its simplest form, a function definition represents an independent, named JavaScript function.
+In its simplest form, a [_Function_](#function) definition represents an independent, named JavaScript function.
 
 ````md
 # Function: parseInt(string [, radix])
@@ -20,11 +20,11 @@ parseInt("F", 16) // returns integer number 15
 ```
 ````
 
-A [Function](#function) definition is made up of multiple, distinguishable sections. They can be summarized as _title_, _description_, _arguments_, _return_, and _examples_.
+A [_Function_](#function) definition is made up of multiple, distinguishable sections. They can be summarized as [_Title_](#title), [_Description_](#description), [_Arguments_](#arguments), [_Return_](#return), and [_Examples_](#examples).
 
 ## Title
 
-The title of a function is made up of a markdown heading, `Function:`, and an argument-only syntax representation of the function. Multiple arguments should be specified using commas `,`, and optional arguments should be specified using brackets `[ ]`. No type information should be included in the title.
+The [_Title_](#title) of a [_Function_](#function) is made up of a markdown heading, `Function:`, and an argument-only syntax representation of the function. Multiple arguments should be specified using commas `,`, and optional arguments should be specified using brackets `[ ]`. No type information should be included in the title.
 
 Example:
 
@@ -32,7 +32,7 @@ Example:
 # Function: parseInt(string [, radix])
 ```
 
-If the function is a [Class Method](./Class.md#method) definition, then the title is slightly different. It no longer contains the `Function:` part, and includes the relative _Class_ identifier.
+If the [_Function_](#function) is a [_Class Method_](./Class.md#method) definition, then the title is slightly different. It no longer contains the `Function:` part, and includes the relative [_Class_](./Class.md) identifier.
 
 Example:
 
@@ -43,13 +43,13 @@ Example:
 
 ## Description
 
-The description for a function consists of any valid markdown content. It can span multiple lines and include line breaks.
+The [_Description_](#description) for a [_Function_](#function) consists of any valid markdown content. It can span multiple lines and include line breaks.
 
 ## Arguments
 
-This section may be omitted from a function definition block if the function has no arguments.
+This section may be omitted from a [_Function_](#function) definition block if the [_Function_](#function)  has no arguments.
 
-The function arguments section is started with the text `Arguments:` on its own line. It should be seperated from the description by an blank line containing only a newline character. Following the section title should be another blank line and then the argument list (even if there is a single argument).
+The [_Arguments_](#arguments) section is started with the text `Arguments:` on its own line. It should be seperated from the [_Description_](#description) by an blank line containing only a newline character. Following the section title should be another blank line and then the argument list (even if there is a single argument).
 
 The arguments list is a markdown list made up of [Parameter](./Parameter.md) definitions.
 
@@ -80,7 +80,7 @@ Returns: `void`
 
 In the `transform()` example, there is an optional `point` argument that defaults to the object `{ x: 0, y: 0 }`. Note, that the `point` itself is optional and not the `x` or `y` points. Thus, passing an incomplete `point` object is invalid (i.e. `{ x: 1 }`).
 
-The second way to define an object argument is to use an _Object_ definition and then reference that definition in the argument parameter.
+The second way to define an object argument is to use an [_Object_](./Object.md) definition and then reference that definition in the argument parameter.
 
 ```md
 ## Object: Point
@@ -105,7 +105,7 @@ Alternatively, if the `point` parameters were defined as optional then passing `
 
 ## Return
 
-This section should not be omitted; a function that returns _nothing_ should indicate that by having a `void` return type.
+This section should not be omitted; a [_Function_](#function) that returns _nothing_ should indicate that by having a `void` return type.
 
 The return section of a function definition is a single line padded by blank lines containing only newline characters. It should immediately follow either the function description or argument sections. The return line starts with the text `Returns: `, the type surrounded by backtick characters, and then an optional description preceeded with a hyphen `-` character.
 
@@ -117,7 +117,7 @@ Returns: `string` - A short description about the return value
 
 ## Examples
 
-The examples section is an optional, but highly recomended part of a function definition. Many users enjoy seeing example code, even if it is just a simple case. Examples should be defined as subsections to the relative function definition. An example section should start with a markdown heading, the text `Example `, the example number, a hyphen character `-`, and then a short title. A description should follow the title line describing what is happening in the example. A description can be substituted for in-line code comments; good examples include better descriptions. Finally and most importantly, the example itself should be contained within a single markdown code block. Examples should be runnable as-is so that users can copy-paste it directly.
+The [_Examples_](#examples) section is an optional, but highly recomended part of a [_Function_](#function) definition. Many users enjoy seeing example code, even if it is just a simple case. [_Examples_](#examples) should be defined as subsections to the relative [_Function_](#function) definition. An example section should start with a markdown heading, the text `Example `, the example number, a hyphen character `-`, and then a short title. A description should follow the title line describing what is happening in the example. A description can be substituted for in-line code comments; good examples include better descriptions. Finally and most importantly, the example itself should be contained within a single markdown code block. [_Examples_](#examples) should be runnable as-is so that users can copy-paste it directly.
 
 Example:
 

@@ -1,10 +1,10 @@
 # Parameter
 
-A _Parameter_ definition is a single-line representation of a JavaScript value. It is made up of multiple parts seperated by hyphen `-` characters: _identifier_, _type_, _optional_, _default_, and _description_.
+A [_Parameter_](#parameter) definition is a single-line representation of a JavaScript value. It is made up of multiple parts seperated by hyphen `-` characters: [_Identifier_](#identifier), [_Type_](#type), [_Optional_](#optional), [_Default_](#default), and [_Description_](#description).
 
 ## Identifier
 
-The first part of a _Parameter_ is the _Identifier_. It is required and should be surrounded by double-asterisk `**` characters.
+The first part of a [_Parameter_](#parameter) is the [_Identifier_](#identifier). It is required and should be surrounded by double-asterisk `**` characters.
 
 Example:
 
@@ -14,7 +14,7 @@ Example:
 
 ## Type
 
-The second part of a _Parameter_ is the _Type_, and like the _Identifier_ it is also required. The _Type_ should be surrounded by backtick `` ` `` characters.
+The second part of a [_Parameter_](#parameter) is the [_Type_](#type), and like the [_Identifier_](#identifier) it is also required. The [_Type_](#type) should be surrounded by backtick `` ` `` characters.
 
 Example:
 
@@ -24,9 +24,9 @@ Example:
 
 ## Optional
 
-The next part of a _Parameter_ is the _Optional_ notation. This part is only required for defining an optional _Parameter_. This part is denoted by the text `optional` surrounded by underscore `_` characters.
+The next part of a [_Parameter_](#parameter) is the  [_Optional_](#optional) notation. This part is only required for defining an optional [_Parameter_](#parameter). This part is denoted by the text `optional` surrounded by underscore `_` characters.
 
-The _Optional_ part should immediately follow the _Type_ part of a _Parameter_ definition. 
+The [_Optional_](#optional) part should immediately follow the [_Type_](#type) part of a [_Parameter_](#parameter) definition.
 
 Example:
 
@@ -36,9 +36,9 @@ Example:
 
 ## Default
 
-The _Default_ part of a _Parameter_ definition denotes a default value for an optional _Parameter_ definition. It should only be included if the _Optional_ part is too, but it is not required. This part is denoted by the text `Default: ` followed by the default value surrounded in backtick `` ` `` characters.
+The [_Default_](#default) part of a [_Parameter_](#parameter) definition denotes a default value for an optional [_Parameter_](#parameter) definition. It should only be included if the [_Optional_](#optional) part is too, but it is not required. This part is denoted by the text `Default: ` followed by the default value surrounded in backtick `` ` `` characters.
 
-The default value should be a valid representation of the _Parameter Type_.
+The default value should be a valid representation of the [_Type_](#type).
 
 Example:
 
@@ -48,7 +48,7 @@ Example:
 
 ## Description
 
-Lastly, all _Parameter_ definitions can be followed by a _Description_. This is a single-line of text that further describes the _Parameter_. It can use any valid markdown syntax that is suitable for a single line (bold, italic, link, code). This part should only come after all other _Parameter_ parts.
+Lastly, all [_Parameter_](#parameter) definitions can be followed by a [_Description_](#description). This is a single-line of text that further describes the [_Parameter_](#parameter). It can use any valid markdown syntax that is suitable for a single line (bold, italic, link, code). This part should only come after all other [_Parameter_](#parameter) parts.
 
 Example:
 
