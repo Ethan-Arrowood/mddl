@@ -38,7 +38,7 @@ Example:
 
 The _Default_ part of a _Parameter_ definition denotes a default value for an optional _Parameter_ definition. It should only be included if the _Optional_ part is too, but it is not required. This part is denoted by the text `Default: ` followed by the default value surrounded in backtick `` ` `` characters.
 
-The default value should be a valid representation of the _Parameter_ _Type_.
+The default value should be a valid representation of the _Parameter Type_.
 
 Example:
 

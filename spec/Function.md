@@ -62,6 +62,47 @@ Arguments:
 * **radix** `number` (optional) - An optional integer between `2` and `36` that represents the _radix_ of the `string`. Note: this does **not** default to `10`.
 ```
 
+If an argument is of type `object` there are two options to represent it.
+
+First, define the argument in-line by indenting the object properties.
+
+```md
+# Function: transform([point])
+
+Arguments:
+
+* **point** - `object` - _optional_ - Default: `{ x: 0, y: 0 }` - A point in a 2D grid. Defaults to an origin point.
+  * **x** - `number`
+  * **y** - `number`
+
+Returns: `void`
+```
+
+In the `transform()` example, there is an optional `point` argument that defaults to the object `{ x: 0, y: 0 }`. Note, that the `point` itself is optional and not the `x` or `y` points. Thus, passing an incomplete `point` object is invalid (i.e. `{ x: 1 }`).
+
+The second way to define an object argument is to use an _Object_ definition and then reference that definition in the argument parameter.
+
+```md
+## Object: Point
+
+A point in a 2D grid.
+
+Parameters:
+
+* **x** - `number`
+* **y** - `number`
+
+## Function: transform([point])
+
+Arguments:
+
+* **point** - `Point` - _optional_ - Default: `{ x: 0, y: 0 }`
+
+Returns: `void`
+```
+
+Alternatively, if the `point` parameters were defined as optional then passing `{ x: 1 }` would be valid, and the `transform` function would be responsible for default the `y` property to `0`.
+
 ## Return
 
 This section should not be omitted; a function that returns _nothing_ should indicate that by having a `void` return type.
