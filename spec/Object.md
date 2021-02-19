@@ -2,9 +2,9 @@
 
 Everything in JavaScript is an object.
 
-[_Object_](#object) definitions are a collection of _Parameter_ definitions. [_Object_](#object) definitions can be referenced as a type within other definitions such as in a _Parameter_.
+[_Object_](#object) definitions are a collection of [_Parameter_](./Parameter.md) definitions. [_Object_](#object) definitions can be referenced as a type within other definitions such as in a [_Parameter_](./Parameter.md).
 
-[_Object_](#object) definitions are made up of three parts: _title_, _description_, and _parameters_.
+[_Object_](#object) definitions are made up of three parts: [_Title_](#title), [_Description_](#description), and [_Parameters_](#parameters).
 
 ```md
 # Object: point
