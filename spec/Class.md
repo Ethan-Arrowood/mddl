@@ -1,5 +1,7 @@
 # Class
 
+A [_Class_](#class) consists of all public facing API methods and properties. A definition starts with the class title, a general description, and parent-class information if necessary. The first sub-section in a class definition should be the constructor method definition. Following the constructor should be methods and properties organized in "Static" and "Instance" groups.
+
 - [Class](#class)
   - [Title](#title)
   - [Extends](#extends)
@@ -8,7 +10,6 @@
   - [Instance/Static Sections](#instancestatic-sections)
   - [Method](#method)
   - [Property](#property)
-  - [Event](#event)
 
 ## Title
 
@@ -50,9 +51,9 @@ Example
 
 ## Instance/Static Sections
 
-Following the [_Constructor_](#constructor) definition, all [_Class_](#class) methods, properties, and events (if it extends `EventEmitter`) should be detailed as either `Instance` or `Static` through the use of markdown heading hierarchy.
+Following the [_Constructor_](#constructor) definition, all [_Class_](#class) methods and properties should be detailed as either `Instance` or `Static` through the use of markdown heading hierarchy.
 
-When a [_Class_](#class) definition is defined as an h1 heading `#`, then the [_Instance/Static Sections_](#instancestatic-sections) should start with an h2 heading `##`. The respective [_Method_](#method), [_Property_](#property), and [_Event_](#event) sections should then begin with an h3 heading `###`.
+When a [_Class_](#class) definition is defined as an h1 heading `#`, then the [_Instance/Static Sections_](#instancestatic-sections) should start with an h2 heading `##`. The respective [_Method_](#method) and [_Property_](#property) should then begin with an h3 heading `###`.
 
 Example:
 
@@ -63,13 +64,13 @@ Example:
 
 ## Instance Methods
 
-### `person.printDescription()`
+### `Person.printDescription()`
 
 ## Instance Properties
 
-### `person.name`
+### `Person.name`
 
-### `person.age`
+### `Person.age`
 
 ```
 
@@ -80,7 +81,7 @@ A [_Method_](#method) section should begin with the correct heading level (see [
 Example:
 
 ```md
-### `person.modifyAddress(address)`
+### `Person.modifyAddress(address)`
 
 Modify the person's address using an object merge operation. Any fields specified in the argument will override the existing one.
 
@@ -95,4 +96,12 @@ Arguments:
 
 ## Property
 
-## Event
+A [_Property_](#property) section begins with the correct subheading level (see [_Instance/Static Sections_](#instancestatic-sections) for more details) followed by the [_Property_](#property) identifier appended to the [_Class_](#class) identifer surrounded by backtick `` ` `` characters. Following the title line should be a newline and then the type line. A [_Property_](#property) follows the [_Parameter_](./Parameter.md) syntax excluding the first part ([_Parameter Identifier_](#./Parameter.md#Identifier))
+
+Example:
+
+```md
+### `Person.name`
+
+* `string` - The full name of the Person instance
+```
