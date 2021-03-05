@@ -61,7 +61,7 @@ The [_Description_](#description) for a [_Function_](#function) consists of any 
 
 ## Arguments
 
-This section may be omitted from a [_Function_](#function) definition block if the [_Function_](#function)  has no arguments.
+This section may be omitted from a [_Function_](#function) definition block if the [_Function_](#function) has no arguments.
 
 The [_Arguments_](#arguments) section is started with the text `Arguments:` on its own line. It should be seperated from the [_Description_](#description) by an blank line containing only a newline character. Following the section title should be another blank line and then the argument list (even if there is a single argument).
 

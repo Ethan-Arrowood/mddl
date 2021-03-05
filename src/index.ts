@@ -1,199 +1,77 @@
-enum TokenType {
-	SPACE,
-	HYPHEN,
-	DOUBLE_ASTERISK,
-	BACKTICK,
-
-	PARAMETER_IDENTIFIER,
-	PARAMETER_TYPE,
-
-	EOF
+type Token = {
+	type: string;
+	value: string;
 }
 
-class Token {
-	type: TokenType
-	lexeme: string
-	literal: unknown
-	line: number
+function tokenize (input: string): Token[] {
+	let currentIndex = 0
+	let currentCharacter = input[currentIndex++]
 
-	constructor(type: TokenType, lexeme: string, literal: unknown, line: number) {
-		this.type = type
-		this.lexeme = lexeme
-		this.literal = literal
-		this.line = line
-	}
+	const tokens = []
 
-	toString() {
-		return `${this.type} ${this.lexeme} ${this.literal}`
-	}
-}
-
-class Scanner {
-	source: string
-	tokens: Token[]
-	start: number
-	current: number
-	line: number
-
-	constructor (source: string) {
-		this.source = source
-		this.tokens = []
-
-		this.start = 0
-		this.current = 0
-		this.line = 1
-	}
-
-	scanTokens() {
-		while (!this.isAtEnd()) {
-			this.start = this.current
-			this.scanToken()
-		}
-
-		this.tokens.push(new Token(TokenType.EOF, "", null, this.line))
-		return this.tokens
-	}
-
-	scanToken() {
-		const c = this.advance()
-		switch (c) {
-			case '*':
-				if (this.match('*')) {
-					this.parameterIdentifier()
-				} else {
-					Scanner.error(this.line, `at position ${this.current}`, "Missing second asterisk")
+	// scan
+	while (currentIndex < input.length) {
+		// start of **identifier**
+		if (currentCharacter === '*') {
+			// advance to next character
+			currentCharacter = input[currentIndex++]
+			// matches opening `**`
+			if (currentCharacter === '*') {
+				// advance to next character
+				currentCharacter = input[currentIndex++]
+				// loop over identifier value
+				let identifierValue = ''
+				while (isValidIdentifierCharacter(currentCharacter)) {
+					identifierValue += currentCharacter
+					currentCharacter = input[currentIndex++]
 				}
-				break
-			case '`':
-				this.parameterType()
-				break
-			case '-':
-				this.addToken(TokenType.HYPHEN)
-				break
-			case ' ':
-				this.addToken(TokenType.SPACE)
-				break
-			case '\n':
-				this.line++
-				break
-			default:
-				Scanner.error(this.line, undefined, "Unexpected character.")
-				break
-		}
-	}
-
-	parameterIdentifier () {
-		while (this.peek() !== '*' && this.peekNext() !== '*' && !this.isAtEnd()) {
-			if (this.peek() === '\n') this.line++
-			this.advance()
-			this.advance()
+				// if loop exits, it means we either found a '*' or an invalid identifier character
+				if (currentCharacter === '*') {
+					// advance to next character
+					currentCharacter = input[currentIndex++]
+					// matches closing `**`
+					if (currentCharacter === '*') {
+						tokens.push({
+							type: 'identifier',
+							value: identifierValue
+						})
+					} else {
+						throw new Error(`Invalid character ${currentCharacter} found at index ${currentIndex}. Expected second '*' character.`)
+					}
+				} else {
+					throw new Error(`Invalid character ${currentCharacter} found at index ${currentIndex}. Expected closing '**' characters.`)
+				}
+			} else {
+				// throw invalid character error
+				throw new Error(`Invalid character ${currentCharacter} found at index ${currentIndex}. Expected second '*' character.`)
+			}
 		}
 
-		if (this.isAtEnd()) {
-			Scanner.error(this.line, undefined, "Unterminated identifier")
-			return
-		}
-
-		this.advance()
-		this.advance()
-
-		const value = this.source.substring(this.start + 2, this.current - 2)
-		this.addToken(TokenType.DOUBLE_ASTERISK)
-		this.addToken(TokenType.PARAMETER_IDENTIFIER, value)
-		this.addToken(TokenType.DOUBLE_ASTERISK)
+		currentCharacter = input[currentIndex++]
 	}
 
-	parameterType () {
-		while (this.peek() !== '`' && !this.isAtEnd()) {
-			if (this.peek() === '\n') this.line++
-			this.advance()
-		}
-
-		if (this.isAtEnd()) {
-			Scanner.error(this.line, undefined, "Unterminated type")
-			return
-		}
-
-		this.advance()
-
-		const value = this.source.substring(this.start + 1, this.current - 1)
-		this.addToken(TokenType.BACKTICK)
-		this.addToken(TokenType.PARAMETER_TYPE, value)
-		this.addToken(TokenType.BACKTICK)
-	}
-
-	match (expected: string) {
-		if (this.isAtEnd()) return false
-		if (this.source.charAt(this.current) !== expected) return false
-
-		this.current++
-		return true
-	}
-
-	peek () {
-		if (this.isAtEnd()) return '\0'
-		return this.source.charAt(this.current)
-	}
-
-	peekNext() {
-		if (this.current + 1 >= this.source.length) return '\0'
-		return this.source.charAt(this.current + 1)
-	}
-
-	advance() {
-		this.current++
-		return this.source.charAt(this.current - 1)
-	}
-
-	addToken(type: TokenType, literal: unknown = null) {
-		const text = this.source.substring(this.start, this.current)
-		this.tokens.push(new Token(type, text, literal, this.line))
-	}
-
-	isAlpha(c: string) {
-		return (c >= 'a' && c <= 'z') ||
-					 (c >= 'A' && c <= 'Z') ||
-					 c === '_'
-	}
-
-	isDigit(c: string) {
-		return c >= '0' && c <= '9'
-	}
-
-	isAlphaNumeric(c: string) {
-		return this.isAlpha(c) || this.isDigit(c)
-	}
-
-	isAtEnd() {
-		return this.current >= this.source.length
-	}
-
-	static error(line: number, where: string = "", message: string) {
-		report(line, where, message)
-	}
+	return tokens
 }
 
-function report(line: number, where: string, message: string) {
-	console.error(`[line ${line}] Error ${where}: ${message}`)
+// for now, a valid identifier is alpha-numeric
+function isValidIdentifierCharacter(char: string) {
+	return (
+		(char >= 'a' && char <= 'z') ||
+		(char >= 'A' && char <= 'Z') ||
+		(char >= '0' && char <= '9')
+	)
 }
 
-function run () {
-	const input = `# Object: point
-
-	Represents a point on a 3D grid.
-	
-	Parameters:
-	
-	* **x** - \`number\`
-	* **y** - \`number\`
-	* **z** - \`number\`
-	`
-
-	const scanner = new Scanner('*mddl** - `boolean`')
-	const tokens = scanner.scanTokens()
-	for (const token of tokens) {
-		console.log(token)
+function runTests (tests: Tests) {
+	let testCount = 0
+	for (const [input, expected] of tests) {
+		console.log(`Test #${testCount} - Input: ${input}`)
+		console.log('Expected:', expected)
+		console.log('Actual:', tokenize(input))
 	}
 }
-
-run()
+type Tests = [string, Token[]][]
+const tests: Tests = [
+	['**name**', [{ type: 'identifier', value: 'name' }]]
+]
+runTests(tests)
