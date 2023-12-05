@@ -29,7 +29,7 @@ Parameters:
 
 It is specified here: [`@mddl/spec`](./packages/spec/)
 
-And an AST + Transformer are being developed here: [`@mddl/ast`](./packages/ast/) and here: [`@mddl/mdast-transformer`](./packages/mdast-transformer/)
+And an AST + Transformer are being developed here: [`@mddl/ast`](./packages/ast/) and here: [`@mddl/from-mdast`](./packages/from-mdast/)
 
 ---
 

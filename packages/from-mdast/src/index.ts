@@ -1,9 +1,10 @@
 import type { Point } from 'unist';
 import { position, pointEnd, pointStart } from 'unist-util-position';
-import type { Root, RootContent } from 'mdast';
+import type { Root as MdastRoot, RootContent } from 'mdast';
 import { MDDLDocumentation, MDDLObject, MDDLParameter } from '@mddl/ast';
+import { name } from 'estree-util-is-identifier-name'
 
-export function mdastToMDDLTransformer(tree: Root) {
+export function toMddl(tree: MdastRoot): MDDLDocumentation {
     const documentation = new MDDLDocumentation({
         position: position(tree)
     });
@@ -103,6 +104,9 @@ function transformObjectContents ({ nodeSlice }: { nodeSlice: RootContent[] }): 
                         // TODO:
                         // Validate the text as an ECMAScript identifier
                         parameterIdentifier = parameterIdentifierNode.children[0].value;
+                        if (!name(parameterIdentifier)) {
+                            throw new Error(`Invalid JavaScript identifier`)
+                        }
                     } else {
                         throw new Error(`Invalid parameter identifier`);
                     }

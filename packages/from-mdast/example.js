@@ -3,7 +3,7 @@ import remarkGfm from 'remark-gfm'
 import remarkParse from 'remark-parse'
 import { inspect } from 'unist-util-inspect';
 
-import { mdastToMDDLTransformer } from './dist/mdast-transformer.js';
+import { toMddl } from './dist/index.js';
 
 const mdastTree = unified().use(remarkParse).use(remarkGfm).parse(`# Object: person
 
@@ -25,8 +25,6 @@ Parameters:
 - **lastName** - \`string\`
 `);
 
-console.log('mdast tree', inspect(mdastTree));
+const mddlTree = toMddl(mdastTree);
 
-const mddlTree = await unified().use(mdastToMDDLTransformer).run(mdastTree);
-
-console.log('mddl tree', inspect(mddlTree));
+console.log(inspect(mddlTree));

@@ -1,13 +1,19 @@
-# @mddl/mdast-transformer
+# @mddl/from-mdast
 
 A module for transforming a mdast AST into a mddl AST.
+
+```js
+import { toMddl } from '@mddl/from-mdast';
+
+const mddlTree = toMddl(mdastTree);
+```
 
 Run the example using `pnpm build` and `node ./example.js`
 
 The output currently looks like this:
 
 ```
-mddl tree mddl-documentation[2] (1:1-19:1, 0-230)
+mddl-documentation[2] (1:1-19:1, 0-230)
 ├─0 mddl-object[1] (1:1-8:25, 0-86)
 │   │ identifier: "person"
 │   │ parameters:
