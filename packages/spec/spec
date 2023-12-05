@@ -1,0 +1,27 @@
+Documentation = Object-Definition | Function-Definition
+
+Function-Definition = Function-Identifier
+Function-Identifier = Markdown-Heading SP "Function:" ECMAScript-IdentifierName
+
+Object-Definition  = Object-Identifier [NL Object-Description] [NL Object-Parameters]
+Object-Identifier  = Markdown-Heading SP "Object:" ECMAScript-IdentifierName
+Object-Description = Markdown
+Object-Parameters  = "Parameters:" NL *("-" SP Parameter)
+
+Parameter-Definition  = Parameter-Identifier SP "-" SP Parameter-Type [SP Parameter-Optional] [SP Parameter-Description]
+Parameter-Identifier  = "**" ECMAScript-IdentifierName "**"
+Parameter-Type        = "`" TypeScript-Type "`"
+Parameter-Optional    = "- _optional_" [SP Parameter-Default]
+Parameter-Default     = "- Default: `" Value "`"
+Parameter-Description = "-" SP Markdown-Text
+
+SP = " "
+NL = "\n"
+
+; Externally Defined Rules
+Markdown-Heading          = valid markdown heading (1*6"#")
+Value                     = valid value for specified type
+Markdown                  = valid block of markdown text
+Markdown-Text             = valid markdown line of text
+ECMAScript-IdentifierName = https://262.ecma-international.org/14.0/#prod-IdentifierName
+TypeScript-Type           = valid typescript type expression

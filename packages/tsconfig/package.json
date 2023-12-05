@@ -1,0 +1,11 @@
+{
+    "name": "@mddl/tsconfig",
+    "exports": {
+        ".": "./tsconfig.base.json",
+        "./base": "./tsconfig.base.json",
+        "./build": "./tsconfig.build.json"
+    },
+    "devDependencies": {
+        "typescript": "5.3.2"
+    }
+}

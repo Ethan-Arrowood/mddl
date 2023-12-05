@@ -1,0 +1,18 @@
+{
+    "$schema": "https://json.schemastore.org/tsconfig",
+    "compilerOptions": {
+        // Support latest and greatest Node.js
+        "lib": ["es2023"],
+        "module": "node16",
+        "target": "es2022",
+        "moduleResolution": "node16",
+    
+        // Strict mode
+        "strict": true,
+        "skipLibCheck": true,
+        "forceConsistentCasingInFileNames": true,
+
+        // Disable emit by default so this can be used as general as possible (linting, testing, etc.)
+        "noEmit": true,
+    }
+}
