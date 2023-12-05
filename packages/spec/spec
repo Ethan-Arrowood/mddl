@@ -1,13 +1,16 @@
-Documentation = Object-Definition | Function-Definition
+Documentation = Object-Definition ; | Function-Definition
 
-Function-Definition = Function-Identifier
-Function-Identifier = Markdown-Heading SP "Function:" ECMAScript-IdentifierName
+; Function (wip)
+; Function-Definition = Function-Identifier
+; Function-Identifier = Markdown-Heading SP "Function:" SP ECMAScript-IdentifierName
 
+; Object
 Object-Definition  = Object-Identifier [NL Object-Description] [NL Object-Parameters]
-Object-Identifier  = Markdown-Heading SP "Object:" ECMAScript-IdentifierName
+Object-Identifier  = Markdown-Heading SP "Object:" SP ECMAScript-IdentifierName
 Object-Description = Markdown
 Object-Parameters  = "Parameters:" NL *("-" SP Parameter)
 
+; Parameter
 Parameter-Definition  = Parameter-Identifier SP "-" SP Parameter-Type [SP Parameter-Optional] [SP Parameter-Description]
 Parameter-Identifier  = "**" ECMAScript-IdentifierName "**"
 Parameter-Type        = "`" TypeScript-Type "`"
@@ -15,6 +18,7 @@ Parameter-Optional    = "- _optional_" [SP Parameter-Default]
 Parameter-Default     = "- Default: `" Value "`"
 Parameter-Description = "-" SP Markdown-Text
 
+; Utilities
 SP = " "
 NL = "\n"
 
