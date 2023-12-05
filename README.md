@@ -4,6 +4,33 @@ markdown documentation language
 
 This specification is a subset on markdown. It adds **no** new features to markdown, but adds additional rules so it is easier to author JavaScript documentation.
 
+**mddl** looks like this:
+
+```md
+# Object: person
+
+A person.
+
+Parameters:
+
+- **name** - `name`
+- **birthday** - `string`
+
+## Object: name
+
+A person's name.
+
+Parameters:
+
+- **firstName** - `string`
+- **middleName** - `string` - _optional_
+- **lastName** - `string`
+```
+
+It is specified here: [`@mddl/spec`](./packages/spec/)
+
+And an AST + Transformer are being developed here: [`@mddl/ast`](./packages/ast/) and here: [`@mddl/mdast-transformer`](./packages/mdast-transformer/)
+
 ---
 
 This is directly inspired by Electron Docs [style-guide](https://github.com/electron/electron/blob/master/docs/styleguide.md). 

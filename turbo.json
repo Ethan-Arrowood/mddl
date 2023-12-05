@@ -1,5 +1,7 @@
 {
     "pipeline": {
-        "build": {}
+        "build": {
+            "dependsOn": ["^build"]
+        }
     }
 }
