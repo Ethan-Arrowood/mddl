@@ -2,7 +2,7 @@
 
 markdown documentation language
 
-This specification is a subset on markdown. It adds **no** new features to markdown, but adds additional rules so it is easier to author JavaScript documentation.
+This specification is a subset of markdown. It adds **no** new features to markdown, but adds additional rules so it is easier to author JavaScript documentation.
 
 **mddl** looks like this:
 
