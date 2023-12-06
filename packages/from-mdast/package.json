@@ -2,7 +2,7 @@
     "name": "@mddl/from-mdast",
     "type": "module",
     "scripts": {
-        "build": "tsc"
+        "build": "tsc -p tsconfig.build.json"
     },
     "dependencies": {
         "@mddl/ast": "workspace:*",
@@ -13,7 +13,8 @@
         "remark-gfm": "4.0.0",
         "remark-parse": "11.0.0",
         "unified": "11.0.4",
-        "unist-util-position": "5.0.0"
+        "unist-util-position": "5.0.0",
+        "vfile": "6.0.1"
     },
     "devDependencies": {
         "@mddl/tsconfig": "workspace:*",

@@ -57,6 +57,9 @@ importers:
       unist-util-position:
         specifier: 5.0.0
         version: 5.0.0
+      vfile:
+        specifier: 6.0.1
+        version: 6.0.1
     devDependencies:
       '@mddl/tsconfig':
         specifier: workspace:*

@@ -1,0 +1,7 @@
+{
+    "extends": "@mddl/tsconfig/build",
+    "compilerOptions": {
+        "outDir": "dist",
+    },
+    "include": ["src", "example.js"]
+}
