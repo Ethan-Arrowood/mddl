@@ -20,17 +20,17 @@ function transformParameter (
         throw new Error(`Failed to parse Parameter. Expected minimum form: \`**<Identifier>** - \`<Type>\`\``);
     }
 
-    // initialize scan index, nodes list, and current node
-    let i = 0; // scan index `i` is always 1 ahead of current `node`
+    let i = 0, node: PhrasingContent, peek: PhrasingContent; // scan index `i` is always 1 ahead of current `node`
     const nodes = mdastListItemNode.children[0].children;
-    let node: PhrasingContent;
-    let peek: PhrasingContent;
 
-    // initialize parameter values
-    let description: PhrasingContent[] = [], defaultValue: any, identifier: string, optional: boolean = false, typeValue: string;
+    let description: PhrasingContent[] = [], 
+        defaultValue: any, 
+        identifier: string, 
+        optional: boolean = false, 
+        typeValue: string;
 
-    // advance (safe because of check on line 19)
-    node = nodes[i++];
+    node = nodes[i++]; // advance (safe because of check on line 19)
+
     // parse Parameter Identifier
     if (node.type !== 'strong') {
         throw new Error(`Failed to parse Parameter Identifier. Expected Strong node.`);
@@ -40,20 +40,21 @@ function transformParameter (
     }
 
     identifier = node.children[0].value;
+
     // valid Parameter Identifier
     if (!name(identifier)) {
         throw new Error(`Failed to parse Parameter Identifier. Invalid JavaScript identifier.`);
     }
 
-    // advance (safe because of check on line 19)
-    node = nodes[i++];
+    node = nodes[i++]; // advance (safe because of check on line 19)
+
     // parse ` - `
     if (node.type !== 'text' || node.value !== ' - ') {
         throw new Error(`Failed to parse Parameter. Expected Text node containing \` - \`.`)
     }
 
-    // advance (safe because of check on line 19)
-    node = nodes[i++];
+    node = nodes[i++]; // Advance (safe because of check on line 19)
+
     // parse Parameter Type Value
     if (node.type !== 'inlineCode') {
         throw new Error(`Failed to parse Parameter Type Value. Expected InlineCode node.`);
@@ -68,7 +69,8 @@ function transformParameter (
 
         // Check for more nodes (Parameter Optional or Parameter Description that starts with a non-text node)
         if (i < nodes.length) {
-            peek = nodes[i];
+            peek = nodes[i]; // Peek
+
             // Check for `optional` Emphasis node
             if (
                 peek.type === 'emphasis'
@@ -76,29 +78,29 @@ function transformParameter (
                 && peek.children[0].type === 'text'
                 && peek.children[0].value === 'optional'
             ) {
-                optional = true;
-
-                node = nodes[i++];
+                optional = true; // Set Parameter Optional
+                node = nodes[i++]; // Advance (safe because of peek)
 
                 // Check for more nodes (Parameter Default Value or Parameter Description)
                 if (i < nodes.length) {
-                    node = nodes[i++];
-
-                    if (
-                        node.type === 'text'
-                        && node.value.startsWith(' - Default: ')
-                    ) {
+                    node = nodes[i++]; // Advance
+                    // Check for Parameter Default Value
+                    if (node.type === 'text' && node.value.startsWith(' - Default: ')) {
+                        // Assert that wasn't the last node
                         if (i === nodes.length) {
                             throw new Error(`Failed to parse Parameter Default Value. Expected InlineCode node.`)
                         }
-                        node = nodes[i++];
+                        node = nodes[i++]; // Advance
+
+                        // Check for InlineCode node
                         if (node.type !== 'inlineCode') {
                             throw new Error(`Failed to parse Parameter Default Value. Expected InlineCode node.`)
                         }
-                        defaultValue = node.value;
+                        defaultValue = node.value; // Set Parameter Default Value
 
+                        // Check for more nodes (Parameter Description)
                         if (i < nodes.length) {
-                            node = nodes[i++];
+                            node = nodes[i++]; // Advance
                         }
                     }
                 }
