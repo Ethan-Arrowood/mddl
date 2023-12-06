@@ -3,7 +3,7 @@ import type { Parent, RootContent, PhrasingContent } from 'mdast';
 
 declare module 'mdast' {
     interface RootContentMap {
-        mddlObject: MDDLObject
+        mddlObject: MddlObject
     }
 }
 
@@ -11,7 +11,7 @@ interface NodeOptions {
     position?: Position;
 }
 
-export interface MDDLDocumentation extends Parent {
+export interface MddlDocumentation extends Parent {
     type: 'mddl-documentation';
 }
 
@@ -19,7 +19,7 @@ export interface DocumentationNodeOptions extends NodeOptions {
     children?: RootContent[];
 }
 
-export class MDDLDocumentation {
+export class MddlDocumentation {
     constructor ({ children = [], position }: DocumentationNodeOptions) {
         this.children = children;
         this.position = position;
@@ -27,21 +27,21 @@ export class MDDLDocumentation {
     }
 }
 
-export interface MDDLObject extends Parent {
+export interface MddlObject extends Parent {
     type: 'mddl-object';
     identifier: string;
-    parameters: MDDLParameter[];
+    parameters: MddlParameter[];
     children: RootContent[]
 }
 
-export interface MDDLObjectOptions extends NodeOptions {
+export interface MddlObjectOptions extends NodeOptions {
     identifier: string;
-    parameters?: MDDLParameter[];
+    parameters?: MddlParameter[];
     children?: RootContent[];
 }
 
-export class MDDLObject {
-    constructor ({ children = [], identifier, parameters = [], position }: MDDLObjectOptions) {
+export class MddlObject {
+    constructor ({ children = [], identifier, parameters = [], position }: MddlObjectOptions) {
         this.children = children;
         this.identifier = identifier;
         this.parameters = parameters;
@@ -50,7 +50,7 @@ export class MDDLObject {
     }
 }
 
-export interface MDDLParameter extends Parent {
+export interface MddlParameter extends Parent {
     type: 'mddl-parameter';
     identifier: string;
     typeValue: string;
@@ -59,7 +59,7 @@ export interface MDDLParameter extends Parent {
     children: PhrasingContent[];
 }
 
-export interface MDDLParameterOptions extends NodeOptions {
+export interface MddlParameterOptions extends NodeOptions {
     defaultValue?: any;
     children?: PhrasingContent[];
     identifier: string;
@@ -67,8 +67,8 @@ export interface MDDLParameterOptions extends NodeOptions {
     typeValue: string;
 }
 
-export class MDDLParameter {
-    constructor({ children = [], defaultValue, identifier, optional = false, typeValue, position }: MDDLParameterOptions) {
+export class MddlParameter {
+    constructor({ children = [], defaultValue, identifier, optional = false, typeValue, position }: MddlParameterOptions) {
         this.children = children;
         this.defaultValue = defaultValue;
         this.identifier = identifier;
