@@ -29,9 +29,9 @@ A person.
 Parameters:
 
 - **name** - \`name\`
-- **birthday** -\`string\`
+- **birthday** - \`string\`
 
-## Object: name
+# Object: name
 
 A person's name.
 
@@ -44,6 +44,6 @@ Parameters:
 
 const mdastTree = unified().use(remarkParse).use(remarkGfm).parse(testInput);
 
-const mddlTree = toMddl(mdastTree);
+const mddlTree1 = toMddl(mdastTree);
 
-console.log(inspect(mddlTree));
+console.log(inspect(mddlTree1));
