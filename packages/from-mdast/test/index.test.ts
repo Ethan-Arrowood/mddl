@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {unified} from 'unified'
 import remarkGfm from 'remark-gfm'
 import remarkParse from 'remark-parse'
-import { transformParameterList } from '../src/transformParameterList';
+import { transformParameterList } from '../src/transformParameterList.js';
 
 function getMdastListNode (input: string) {
     const mdastTree = unified().use(remarkParse).use(remarkGfm).parse(input);

@@ -14,7 +14,8 @@
         "remark-parse": "11.0.0",
         "unified": "11.0.4",
         "unist-util-position": "5.0.0",
-        "vfile": "6.0.1"
+        "vfile": "6.0.1",
+        "vfile-message": "4.0.2"
     },
     "devDependencies": {
         "@mddl/tsconfig": "workspace:*",

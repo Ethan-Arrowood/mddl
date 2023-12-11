@@ -2,6 +2,7 @@ import {unified} from 'unified'
 import remarkGfm from 'remark-gfm'
 import remarkParse from 'remark-parse'
 import { inspect } from 'unist-util-inspect';
+import { VFile } from 'vfile';
 
 import { toMddl } from './dist/index.js';
 
@@ -44,6 +45,26 @@ Parameters:
 
 const mdastTree = unified().use(remarkParse).use(remarkGfm).parse(testInput);
 
-const mddlTree1 = toMddl(mdastTree);
+let file = new VFile({
+    value: testInput
+});
 
-console.log(inspect(mddlTree1));
+throw file.fail('Uknown word `Object`', {
+    place: {
+        start: {
+            line: 1,
+            column: 3,
+            offset: 0
+        },
+        end: {
+            line: 1,
+            column: 9,
+            offset: 0
+        }
+    }
+});
+
+console.log('foo');
+
+// const mddlTree1 = toMddl(mdastTree);
+// console.log(inspect(mddlTree1));
