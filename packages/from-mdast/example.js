@@ -1,10 +1,10 @@
-import {unified} from 'unified'
-import remarkGfm from 'remark-gfm'
-import remarkParse from 'remark-parse'
-import { inspect } from 'unist-util-inspect';
-import { VFile } from 'vfile';
+import { unified } from "unified";
+import remarkGfm from "remark-gfm";
+import remarkParse from "remark-parse";
+import { inspect } from "unist-util-inspect";
+import { VFile } from "vfile";
 
-import { toMddl } from './dist/index.js';
+import { toMddl } from "./dist/index.js";
 
 const testInput = `# Object: alphabet
 
@@ -21,7 +21,7 @@ Parameters:
 - **g** - \`string\` - _optional_ - Default: \`'1'\`
 - **h** - \`string\` - _optional_ - Default: \`'1'\` - A plain description
 - **i** - \`string\` - _optional_ - Default: \`'1'\` - _A_ non-plain **description**
-`
+`;
 
 const testInput2 = `# Object: person
 
@@ -41,7 +41,7 @@ Parameters:
 - **firstName** - \`string\`
 - **middleName** - \`string\` - _optional_
 - **lastName** - \`string\`
-`
+`;
 
 const mdastTree = unified().use(remarkParse).use(remarkGfm).parse(testInput);
 

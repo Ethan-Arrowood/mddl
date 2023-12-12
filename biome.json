@@ -1,0 +1,25 @@
+{
+    "$schema": "https://biomejs.dev/schemas/1.4.0/schema.json",
+    "organizeImports": {
+        "enabled": true
+    },
+    "formatter": {
+        "enabled": true,
+        "ignore": [
+            "**/dist/**/*",
+            "**/tsconfig.*.json",
+            "**/tsconfig.json"
+        ]
+    },
+    "linter": {
+        "enabled": true,
+        "rules": {
+            "recommended": true
+        },
+        "ignore": [
+            "**/dist/**/*",
+            "**/tsconfig.*.json",
+            "**/tsconfig.json"
+        ]
+    }
+}
