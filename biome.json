@@ -4,18 +4,15 @@
         "enabled": true
     },
     "formatter": {
-        "enabled": true,
-        "ignore": [
-            "**/dist/**/*",
-            "**/tsconfig.*.json",
-            "**/tsconfig.json"
-        ]
+        "enabled": true
     },
     "linter": {
         "enabled": true,
         "rules": {
             "recommended": true
-        },
+        }
+    },
+    "files": {
         "ignore": [
             "**/dist/**/*",
             "**/tsconfig.*.json",
