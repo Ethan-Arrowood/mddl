@@ -4,11 +4,12 @@ import { position } from "unist-util-position";
 import type { VFile } from 'vfile';
 import { name } from 'estree-util-is-identifier-name';
 import { PhrasingContent } from "mdast";
+import { ParseRule } from "./parseRule.js";
 
 function transformParameter (
     mdastListItemNode: ListItem,
-    options?: {
-        file?: VFile
+    { file }: {
+        file: VFile
     }
 ): MddlParameter {
     // Error early if the Parameter is not minimally correct
@@ -17,7 +18,7 @@ function transformParameter (
         || mdastListItemNode.children[0].type !== 'paragraph'
         || mdastListItemNode.children[0].children.length < 3
     ) {
-        throw new Error(`Failed to parse Parameter. Expected minimum form: \`**<Identifier>** - \`<Type>\`\``);
+        throw file.fail(new ParseRule('Paramter', 'Paragraph', 'in the minimum form \`**<Identifier>** - \`<Type>\`\`', { place: position(mdastListItemNode)}));
     }
 
     let i = 0, node: PhrasingContent, peek: PhrasingContent; // scan index `i` is always 1 ahead of current `node`
@@ -33,31 +34,31 @@ function transformParameter (
 
     // parse Parameter Identifier
     if (node.type !== 'strong') {
-        throw new Error(`Failed to parse Parameter Identifier. Expected Strong node.`);
+        throw file.fail(new ParseRule('Parameter Identifier', 'Strong', { place: position(node) }));
     }
     if (node.children.length !== 1 || node.children[0].type !== 'text') {
-        throw new Error(`Failed to parse Parameter Identifier. Expected singular Text node.`);
+        throw file.fail(new ParseRule('Parameter Identifier', 'Text', { place: position(node) }));
     }
 
     identifier = node.children[0].value;
 
     // valid Parameter Identifier
     if (!name(identifier)) {
-        throw new Error(`Failed to parse Parameter Identifier. Invalid JavaScript identifier.`);
+        throw file.fail(new ParseRule('Parameter Identifier', 'valid JavaScript Identifier', { place: position(node) }));
     }
 
     node = nodes[i++]; // advance (safe because of check on line 19)
 
     // parse ` - `
     if (node.type !== 'text' || node.value !== ' - ') {
-        throw new Error(`Failed to parse Parameter. Expected Text node containing \` - \`.`)
+        throw file.fail(new ParseRule('Parameter', 'Text', 'containing \` - \`', { place: position(node) }));
     }
 
     node = nodes[i++]; // Advance (safe because of check on line 19)
 
     // parse Parameter Type Value
     if (node.type !== 'inlineCode') {
-        throw new Error(`Failed to parse Parameter Type Value. Expected InlineCode node.`);
+        throw file.fail(new ParseRule('Parameter Type Value', 'InlineCode', { place: position(node) }));
     }
 
     typeValue = node.value;
@@ -88,13 +89,13 @@ function transformParameter (
                     if (node.type === 'text' && node.value.startsWith(' - Default: ')) {
                         // Assert that wasn't the last node
                         if (i === nodes.length) {
-                            throw new Error(`Failed to parse Parameter Default Value. Expected InlineCode node.`)
+                            throw file.fail(new ParseRule('Parameter Default Value', 'InlineCode', { place: position(node) }));
                         }
                         node = nodes[i++]; // Advance
 
                         // Check for InlineCode node
                         if (node.type !== 'inlineCode') {
-                            throw new Error(`Failed to parse Parameter Default Value. Expected InlineCode node.`)
+                            throw file.fail(new ParseRule('Parameter Default Value', 'InlineCode', { place: position(node) }));
                         }
                         defaultValue = node.value; // Set Parameter Default Value
 
@@ -109,7 +110,7 @@ function transformParameter (
 
         // `node` is last and `node` is a Text node and it is ` - `.
         if (i === nodes.length && node.type === 'text' && node.value.trim() === '-') {
-            throw new Error(`Failed to parse Parameter. Expected Parameter Description.`);
+            throw file.fail(new ParseRule('Parameter', 'Parameter Description', { place: position(node) }));
         }
 
         // Is the current node text and is it longer than 
@@ -136,6 +137,6 @@ function transformParameter (
     });
 }
 
-export function transformParameterList (mdastListNode: List, options?: { file?: VFile }): MddlParameter[] {
+export function transformParameterList (mdastListNode: List, options: { file: VFile }): MddlParameter[] {
     return mdastListNode.children.map(listItemNode => transformParameter(listItemNode, options));
 }

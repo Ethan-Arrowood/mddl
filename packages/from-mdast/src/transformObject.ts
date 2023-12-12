@@ -3,29 +3,7 @@ import { RootContent } from 'mdast';
 import { pointEnd, pointStart, position } from 'unist-util-position';
 import type { VFile } from 'vfile';
 import { transformParameterList } from './transformParameterList.js';
-import { VFileMessage, Options as VFileMessageOptions } from 'vfile-message';
-
-class FromMdastVFileMessage extends VFileMessage {
-    constructor (reason: string, options?: VFileMessageOptions) {
-        super(reason, { ...options, source: '@mddl/from-mdast' })
-    }
-}
-
-class MinimumFormObjectRule extends FromMdastVFileMessage {
-    constructor(options?: VFileMessageOptions) {
-        super(`Failed to parse Object. Expected minimum form: \`# Object: <Identifier>\``, options)
-    }
-}
-
-class ParseRule extends FromMdastVFileMessage {
-    constructor(parseNode: string, expectedNode: string, extraReasonOrOptions?: string | VFileMessageOptions, options?: VFileMessageOptions) {
-        if (typeof extraReasonOrOptions !== 'string') {
-            options = extraReasonOrOptions;
-            extraReasonOrOptions = undefined;
-        }
-        super(`Failed to parse ${parseNode}. Expected ${expectedNode} node${extraReasonOrOptions ? `${extraReasonOrOptions}.` : '.'}`, options);
-    }
-}
+import { ParseRule } from './parseRule.js';
 
 export function transformObject (
     nodes: RootContent[],
@@ -49,7 +27,7 @@ export function transformObject (
         || nodes[0].children[0].type !== 'text'
         || !nodes[0].children[0].value.startsWith('Object: ')
     ) {
-        throw new Error(`Failed to parse Object Identifier. Expected singular Text node starting with \`Object: \`.`);
+        throw file.fail(new ParseRule('Object Identifier', 'Text', 'starting with \`Object: \`', { place: position(nodes[0]) }))
     }
 
     let startPoint = pointStart(nodes[0]),
@@ -71,13 +49,13 @@ export function transformObject (
 
         if (parametersParagraphNodeIndex !== -1) {
             if (parametersParagraphNodeIndex + 1 >= nodes.length) {
-                throw new Error(`Failed to parse Object Parameters. Expected List node.`)
+                throw file.fail(new ParseRule('Object Parameters', 'List', { place: position(nodes[0]) }));
             }
     
             const mdastListNode = nodes[parametersParagraphNodeIndex + 1];
     
             if (mdastListNode.type !== 'list') {
-                throw new Error(`Failed to parse Object Parameters. Expected List node.`)
+                throw file.fail(new ParseRule('Object Parameters', 'List', { place: position(nodes[parametersParagraphNodeIndex + 1]) }));
             }
 
             parameters = transformParameterList(mdastListNode, { file });

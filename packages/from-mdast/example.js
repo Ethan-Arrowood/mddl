@@ -45,26 +45,5 @@ Parameters:
 
 const mdastTree = unified().use(remarkParse).use(remarkGfm).parse(testInput);
 
-let file = new VFile({
-    value: testInput
-});
-
-throw file.fail('Uknown word `Object`', {
-    place: {
-        start: {
-            line: 1,
-            column: 3,
-            offset: 0
-        },
-        end: {
-            line: 1,
-            column: 9,
-            offset: 0
-        }
-    }
-});
-
-console.log('foo');
-
-// const mddlTree1 = toMddl(mdastTree);
-// console.log(inspect(mddlTree1));
+const mddlTree1 = toMddl(mdastTree);
+console.log(inspect(mddlTree1));
