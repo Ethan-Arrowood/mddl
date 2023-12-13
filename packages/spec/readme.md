@@ -38,14 +38,11 @@ The [Parameter-Identifier][] and [Parameter-Type-Value][] are required.
 
 ```md
 **a** - `string`
-**b** - `string` - A simple description
-**c** - `string` - _A_ complex **description**
-**d** - `string` - _optional_
-**e** - `string` - _optional_ - A simple description
-**f** - `string` - _optional_ - _A_ complex **description**
-**g** - `string` - _optional_ - Default: `'1'`
-**h** - `string` - _optional_ - Default: `'1'` - A simple description
-**i** - `string` - _optional_ - Default: `'1'` - _A_ complex **description**
+**b** - `string` - A **description**
+**c** - `string` - _optional_
+**d** - `string` - _optional_ - A **description**
+**e** - `string` - _optional_ - Default: `'1'`
+**f** - `string` - _optional_ - Default: `'1'` - A **description**
 ```
 
 #### Parameter-Identifier
