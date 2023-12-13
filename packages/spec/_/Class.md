@@ -1,19 +1,19 @@
 # Class
 
-A [_Class_](#class) consists of all public facing API methods and properties. A definition starts with the class title, a general description, and parent-class information if necessary. The first sub-section in a class definition should be the constructor method definition. Following the constructor should be methods and properties organized in "Static" and "Instance" groups.
+A [*Class*](#class) consists of all public facing API methods and properties. A definition starts with the class title, a general description, and parent-class information if necessary. The first sub-section in a class definition should be the constructor method definition. Following the constructor should be methods and properties organized in "Static" and "Instance" groups.
 
-- [Class](#class)
-  - [Title](#title)
-  - [Extends](#extends)
-  - [Description](#description)
-  - [Constructor](#constructor)
-  - [Instance/Static Sections](#instancestatic-sections)
-  - [Method](#method)
-  - [Property](#property)
+* [Class](#class)
+  * [Title](#title)
+  * [Extends](#extends)
+  * [Description](#description)
+  * [Constructor](#constructor)
+  * [Instance/Static Sections](#instancestatic-sections)
+  * [Method](#method)
+  * [Property](#property)
 
 ## Title
 
-The [_Title_](#title) of a [_Class_](#class) is made up of a markdown heading, `Class:`, and a class identifier.
+The [*Title*](#title) of a [*Class*](#class) is made up of a markdown heading, `Class:`, and a class identifier.
 
 Example:
 
@@ -23,7 +23,7 @@ Example:
 
 ## Extends
 
-The optional [_Extends_](#extends) line of a [_Class_](#class) should immediately follow the [_Title_](#title) with a preceding newline. It should be a single line of text containing `Extends:` and then the parent identifier surrounded by backtick `` ` `` characters. The parent identifier can be any extendable JavaScript object.
+The optional [*Extends*](#extends) line of a [*Class*](#class) should immediately follow the [*Title*](#title) with a preceding newline. It should be a single line of text containing `Extends:` and then the parent identifier surrounded by backtick `` ` `` characters. The parent identifier can be any extendable JavaScript object.
 
 Example:
 
@@ -35,11 +35,11 @@ Extends: `Person`
 
 ## Description
 
-The [_Description_](#description) of an [_Class_](#class) consists of any valid markdown content. It can span multiple linse and include line breaks. It should follow the [_Title_](#title) or [_Extends_](#extends) sections.
+The [*Description*](#description) of an [*Class*](#class) consists of any valid markdown content. It can span multiple linse and include line breaks. It should follow the [*Title*](#title) or [*Extends*](#extends) sections.
 
 ## Constructor
 
-The [_Constructor_](#constructor) of an [_Class_](#class) is a [_Function_](./Function.md) definition with a unique [_Function Title_](./Function.md#title).
+The [*Constructor*](#constructor) of an [*Class*](#class) is a [*Function*](./Function.md) definition with a unique [*Function Title*](./Function.md#title).
 
 Example
 
@@ -51,9 +51,9 @@ Example
 
 ## Instance/Static Sections
 
-Following the [_Constructor_](#constructor) definition, all [_Class_](#class) methods and properties should be detailed as either `Instance` or `Static` through the use of markdown heading hierarchy.
+Following the [*Constructor*](#constructor) definition, all [*Class*](#class) methods and properties should be detailed as either `Instance` or `Static` through the use of markdown heading hierarchy.
 
-When a [_Class_](#class) definition is defined as an h1 heading `#`, then the [_Instance/Static Sections_](#instancestatic-sections) should start with an h2 heading `##`. The respective [_Method_](#method) and [_Property_](#property) should then begin with an h3 heading `###`.
+When a [*Class*](#class) definition is defined as an h1 heading `#`, then the [*Instance/Static Sections*](#instancestatic-sections) should start with an h2 heading `##`. The respective [*Method*](#method) and [*Property*](#property) should then begin with an h3 heading `###`.
 
 Example:
 
@@ -76,7 +76,7 @@ Example:
 
 ## Method
 
-A [_Method_](#method) section should begin with the correct heading level (see [_Instance/Static Sections_](#instancestatic-sections) for more details). The rest of the [_Method_](#method) should follow the [_Function_](./Function.md) definition rules. Remember that the title for a [_Method_](#method) differs slightly from a standard [_Function Title_](./Function.md#title) (see the [_Function Title_](./Function.md#title) rules for more details).
+A [*Method*](#method) section should begin with the correct heading level (see [*Instance/Static Sections*](#instancestatic-sections) for more details). The rest of the [*Method*](#method) should follow the [*Function*](./Function.md) definition rules. Remember that the title for a [*Method*](#method) differs slightly from a standard [*Function Title*](./Function.md#title) (see the [*Function Title*](./Function.md#title) rules for more details).
 
 Example:
 
@@ -96,7 +96,7 @@ Arguments:
 
 ## Property
 
-A [_Property_](#property) section begins with the correct subheading level (see [_Instance/Static Sections_](#instancestatic-sections) for more details) followed by the [_Property_](#property) identifier appended to the [_Class_](#class) identifer surrounded by backtick `` ` `` characters. Following the title line should be a newline and then the type line. A [_Property_](#property) follows the [_Parameter_](./Parameter.md) syntax excluding the first part ([_Parameter Identifier_](#./Parameter.md#Identifier))
+A [*Property*](#property) section begins with the correct subheading level (see [*Instance/Static Sections*](#instancestatic-sections) for more details) followed by the [*Property*](#property) identifier appended to the [*Class*](#class) identifer surrounded by backtick `` ` `` characters. Following the title line should be a newline and then the type line. A [*Property*](#property) follows the [*Parameter*](./Parameter.md) syntax excluding the first part ([*Parameter Identifier*](#./Parameter.md#Identifier))
 
 Example:
 

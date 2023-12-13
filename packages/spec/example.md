@@ -4,8 +4,8 @@ A person.
 
 Parameters:
 
-- **name** - `name`
-- **birthday** - `string`
+*   **name** - `name`
+*   **birthday** - `string`
 
 ## Object: name
 
@@ -13,6 +13,7 @@ A person's name.
 
 Parameters:
 
-- **firstName** - `string`
-- **middleName** - `string` - _optional_
-- **lastName** - `string`
+*   **firstName** - `string`
+*   **middleName** - `string` - *optional*
+*   **lastName** - `string`
+

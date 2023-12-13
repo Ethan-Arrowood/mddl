@@ -6,7 +6,7 @@ See [spec.abnf](./spec.abnf) for a formal grammar for **mddl**.
 
 ## Introduction
 
-**mddl** is a _subset_ of markdown. All **mddl** is markdown, but _not_ all markdown is **mddl**.
+**mddl** is a *subset* of markdown. All **mddl** is markdown, but *not* all markdown is **mddl**.
 
 The language is particularly specified in order to provide a consistent and reliable developer experience. Similar to other languages, backwards compatibility is paramount. Thus, as this project is still in development (pre-v1), expect breaking changes to occur.
 
@@ -21,11 +21,13 @@ A [Parameter]() definition is a single-line representation of a JavaScript value
 The [Parameter-Identifier]() and [Parameter-Type-Value]() are required.
 
 #### Minimal Example:
+
 ```md
 **Identifier** - `Type-Value`
 ```
 
 #### Complete Example:
+
 ```md
 **Identifier** - `Type-Value` - _optional_ - Default: `Value` - Description
 ```
@@ -77,16 +79,19 @@ The forth part of a [Parameter](). It is not required. Must come after all other
 ##### Examples
 
 ###### Without Optional
+
 ```md
 **name** - `string` - The name property
 ```
 
 ###### With Optional
+
 ```md
 **name** - `string` - _optional_ - The name property
 ```
 
 ###### With Default Value
+
 ```md
 **name** - `string` - _optional_ - Default: `"mddl"` - The name property
 ```

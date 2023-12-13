@@ -31,8 +31,8 @@ It is specified here: [`@mddl/spec`](./packages/spec/)
 
 And an AST + Transformer are being developed here: [`@mddl/ast`](./packages/ast/) and here: [`@mddl/from-mdast`](./packages/from-mdast/)
 
----
+***
 
-This is directly inspired by Electron Docs [style-guide](https://github.com/electron/electron/blob/master/docs/styleguide.md). 
+This is directly inspired by Electron Docs [style-guide](https://github.com/electron/electron/blob/master/docs/styleguide.md).
 
 Originally, this project was going to be built to service Electron's and Node's existing documentation styles and provide some type of standardization to the major projects. This project idea has evolved significantly since then and may not uphold this original goal immediately.
