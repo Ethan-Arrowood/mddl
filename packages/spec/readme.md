@@ -6,9 +6,43 @@ See [spec.abnf](./spec.abnf) for a formal grammar for **mddl**.
 
 ## Introduction
 
-**mddl** is a *subset* of markdown. All **mddl** is markdown, but *not* all markdown is **mddl**.
+**mddl** is a _subset_ of markdown. All **mddl** is markdown, but _not_ all markdown is **mddl**.
 
 The language is particularly specified in order to provide a consistent and reliable developer experience. Similar to other languages, backwards compatibility is paramount. Thus, as this project is still in development (pre-v1), expect breaking changes to occur.
+
+## Specification
+
+The ABNF formal grammar for **mddl**.
+
+```abnf
+Documentation = Object-Definition 
+
+; Object
+Object-Definition  = Object-Identifier [NL Object-Description] [NL Object-Parameters]
+Object-Identifier  = Markdown-Heading SP "Object:" SP ECMAScript-IdentifierName
+Object-Description = Markdown
+Object-Parameters  = "Parameters:" NL *("-" SP Parameter)
+
+; Parameter
+Parameter-Definition  = Parameter-Identifier SP "-" SP Parameter-Type [SP Parameter-Optional] [SP Parameter-Description]
+Parameter-Identifier  = "**" ECMAScript-IdentifierName "**"
+Parameter-Type        = "`" TypeScript-Type "`"
+Parameter-Optional    = "- _optional_" [SP Parameter-Default]
+Parameter-Default     = "- Default: `" Value "`"
+Parameter-Description = "-" SP Markdown-Text
+
+; Utilities
+SP = " "
+NL = "\n"
+
+; Externally Defined Rules
+Markdown-Heading          = valid markdown heading (1*6"#")
+Value                     = valid value for specified type
+Markdown                  = valid block of markdown text
+Markdown-Text             = valid markdown line of text
+ECMAScript-IdentifierName = https://262.ecma-international.org/14.0/#prod-IdentifierName
+TypeScript-Type           = valid typescript type expression
+```
 
 ## Definitions
 
@@ -117,8 +151,85 @@ An [Object][] definition is a multi-line representation of a JavaScript object. 
 The [Object-Description][] is the only _optional_ part.
 
 #### Object-Identifier
+
+The first part of an [Object][]. It must be a markdown heading immediately followed by the text `Object: `, and then the identifier itself. The identifier must be a valid [JavaScript Identifier][].
+
+###### Example: An empty object named `name`
+
+```md
+# Object: name
+```
+
 #### Object-Description
+
+Optionally following the [Object-Identifier][], any valid multi-line markdown will comprise the [Object][] description. Everything up to the [Object-Parameters][] will be included in the [Object][] description.
+
+###### Example
+
+````md
+# Object: name
+
+The object description.
+
+Which **can** contain [any]() sort of markdown.
+
+Even code blocks!
+```js
+console.log('mddl');
+```
+````
+
 #### Object-Parameters
+
+Optionally following the [Object-Description][], or the [Object-Identifier][] (if a description does not exist), is the parameter list. It must start with the Text node `Parameters:`. Next, object parameters should be a bulleted list which each List Item node containing a single [Parameter][].
+
+###### Example: An object named `name`, without a description, with parameters
+
+```md
+# Object: name
+
+Parameters:
+
+*   **first** - `string`
+*   **middle** - `string` - _optional_
+*   **last** - `string`
+
+```
+
+> The spacing between the bullet and the [Parameter-Identifier][] is not specified. The gap demonstrated in this example is the [remark-lint](https://github.com/remarkjs/remark-lint) [List Item Indent](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-list-item-indent#readme) rule.
+
+###### Example: An object named `name`, with a description and parameters
+
+```md
+# Object: name
+
+A name of a person. The `middle` name is not required.
+
+Parameters:
+
+*   **first** - `string`
+*   **middle** - `string` - _optional_
+*   **last** - `string`
+
+```
+
+---
+
+### Function
+
+> Coming soon!
+
+---
+
+### Class
+
+> Coming soon!
+
+---
+
+### Array
+
+> Coming soon!
 
 [JavaScript Identifier]: https://262.ecma-international.org/14.0/#prod-IdentifierName
 [Object]: #object
