@@ -23,27 +23,13 @@ Parameters:
 - **i** - \`string\` - _optional_ - Default: \`'1'\` - _A_ non-plain **description**
 `;
 
-const testInput2 = `# Object: person
-
-A person.
-
-Parameters:
-
-- **name** - \`name\`
-- **birthday** - \`string\`
-
-# Object: name
-
-A person's name.
-
-Parameters:
-
-- **firstName** - \`string\`
-- **middleName** - \`string\` - _optional_
-- **lastName** - \`string\`
-`;
+const file = new VFile({
+    path: 'input.md',
+    value: testInput
+})
 
 const mdastTree = unified().use(remarkParse).use(remarkGfm).parse(testInput);
 
-const mddlTree1 = toMddl(mdastTree);
+const mddlTree1 = toMddl(mdastTree, { file });
+
 console.log(inspect(mddlTree1));

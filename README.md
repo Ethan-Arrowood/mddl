@@ -19,11 +19,17 @@ Parameters:
 
 ```
 
+> **mddl** is very early in development. It is currently _not_ published to any registry. Enable notifications for this repo and follow [@ArrowoodTech](https://twitter.com/ArrowoodTech) on Twitter for latest updates.
+
 ## Packages
 
 *   [`@mddl/spec`](./packages/spec/) - complete specification for **mddl**
 *   [`@mddl/ast`](./packages/ast/) - AST forms and types
 *   [`@mddl/from-mdast`](./packages/from-mdast/) - [mdast](https://github.com/syntax-tree/mdast) to [`@mddl/ast`](./packages/ast/) transformer package.
+
+## Try it out!
+
+Inside of [`@mddl/from-mdast`](./packages/from-mdast/) is an `example.js` you can run locally. Give it a try!
 
 ---
 
