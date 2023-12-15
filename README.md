@@ -2,37 +2,29 @@
 
 markdown documentation language
 
-This specification is a subset of markdown. It adds **no** new features to markdown, but adds additional rules so it is easier to author JavaScript documentation.
+**mddl** is a subset of markdown. It adds **no** new features to markdown, but adds additional rules so it is easier to author JavaScript documentation.
 
 **mddl** looks like this:
 
 ```md
-# Object: person
+# Object: FetchOptions
 
-A person.
-
-Parameters:
-
-- **name** - `name`
-- **birthday** - `string`
-
-## Object: name
-
-A person's name.
+An object containing any custom settings you want to apply to the request.
 
 Parameters:
 
-- **firstName** - `string`
-- **middleName** - `string` - _optional_
-- **lastName** - `string`
+*   **method** - `string` - _optional_ - Default: `'GET'` - The request method, e.g., `"GET"`, `"POST"`
+*   **headers** - `Headers | Record<string, string>` - _optional_ - Any headers you want to add to your request.
+<!-- ...etc. -->
+
 ```
 
-It is specified here: [`@mddl/spec`](./packages/spec/)
+## Packages
 
-And an AST + Transformer are being developed here: [`@mddl/ast`](./packages/ast/) and here: [`@mddl/from-mdast`](./packages/from-mdast/)
+*   [`@mddl/spec`](./packages/spec/) - complete specification for **mddl**
+*   [`@mddl/ast`](./packages/ast/) - AST forms and types
+*   [`@mddl/from-mdast`](./packages/from-mdast/) - [mdast](https://github.com/syntax-tree/mdast) to [`@mddl/ast`](./packages/ast/) transformer package.
 
-***
+---
 
-This is directly inspired by Electron Docs [style-guide](https://github.com/electron/electron/blob/master/docs/styleguide.md).
-
-Originally, this project was going to be built to service Electron's and Node's existing documentation styles and provide some type of standardization to the major projects. This project idea has evolved significantly since then and may not uphold this original goal immediately.
+This project was originally inspired by Electron Docs [style-guide](https://github.com/electron/electron/blob/master/docs/styleguide.md).
