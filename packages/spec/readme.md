@@ -2,8 +2,6 @@
 
 The specification for **mddl**.
 
-See [spec.abnf](./spec.abnf) for a formal grammar for **mddl**.
-
 ## Introduction
 
 **mddl** is a _subset_ of markdown. All **mddl** is markdown, but _not_ all markdown is **mddl**.
