@@ -63,6 +63,9 @@ importers:
       unified:
         specifier: 11.0.4
         version: 11.0.4
+      unist-util-inspect:
+        specifier: 8.0.0
+        version: 8.0.0
       unist-util-position:
         specifier: 5.0.0
         version: 5.0.0
@@ -2092,7 +2095,6 @@ packages:
     resolution: {integrity: sha512-/3Wn/wU6/H6UEo4FoYUeo8KUePN8ERiZpQYFWYoihOsr1DoDuv80PeB0hobVZyYSvALa2e556bG1A1/AbwU4yg==}
     dependencies:
       '@types/unist': 3.0.2
-    dev: true
 
   /unist-util-is@5.2.1:
     resolution: {integrity: sha512-u9njyyfEh43npf1M+yGKDGVPbY/JWEemg5nH05ncKPfi+kBbKBJoTdsogMu33uhytuLlv9y0O7GH7fEdwLdLQw==}
