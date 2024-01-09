@@ -13,7 +13,20 @@ The language is particularly specified in order to provide a consistent and reli
 The ABNF formal grammar for **mddl**.
 
 ```abnf
-Documentation = Object-Definition 
+Documentation = Object-Definition
+
+; Function
+Function-Definition            = Function-Declaration [NL Function-Description]
+Function-Declaration           = Markdown-Heading SP "Function: `" FD-Expression "`"
+; Function Declaration Expression
+FD-Expression                  = ECMAScript-IdentifierName "(" [FD-Parameters] ")"
+FD-Parameters                  = (Required-FD-Parameters / Optional-Starting-FD-Parameter) *(Optional-FD-Parameter)
+Required-FD-Parameters         = FD-Parameter *("," SP FD-Parameter)
+Optional-Starting-FD-Parameter = "[" SP FD-Parameter [Optional-FD-Parameter] "]"
+Optional-FD-Parameter          = "[," SP FD-Parameter [Optional-FD-Parameter] "]"
+FD-Parameter                   = ECMAScript-IdentifierName
+
+Function-Description           = Markdown
 
 ; Object
 Object-Definition  = Object-Identifier [NL Object-Description] [NL Object-Parameters]
@@ -146,8 +159,6 @@ The forth part of a [Parameter][]. It is not required. Must come after all other
 An [Object][] definition is a multi-line representation of a JavaScript object. It is comprised of three distinct parts:
 [Object-Identifier][], [Object-Description][], and [Object-Parameters][].
 
-The [Object-Description][] is the only _optional_ part.
-
 #### Object-Identifier
 
 The first part of an [Object][]. It must be a markdown heading immediately followed by the text `Object: `, and then the identifier itself. The identifier must be a valid [JavaScript Identifier][].
@@ -215,7 +226,92 @@ Parameters:
 
 ### Function
 
-> Coming soon!
+A [Function][] definition is a multi-line representation of a JavaScript function. It is comprised of X distinct parts: [Function-Identifier][], [Function-Description][], [Function-Return-Value][], and [Function-Arguments][].
+
+#### Function-Identifier
+
+The specification for a [Function-Identifier][] is complex. Loosely, it is comprised of markdown heading, the text `Function: `, the function name, and then the function arguments. See the examples below for various possibilities and refer to the [Specification][] for the exact definition.
+
+###### Example: Function identifiers
+
+```md
+<!-- A function with zero arguments -->
+# Function: `f()`
+
+<!-- A function with one argument -->
+# Function: `f(x)`
+
+<!-- A function with one argument -->
+# Function: `f([x])`
+
+<!-- A function with two arguments -->
+# Function: `f(x, y)`
+
+<!-- A function with one required argument and one optional argument -->
+# Function: `f(x[, y])`
+
+<!-- A function with two required arguments and one optional argument-->
+# Function: `f(x, y[, z])`
+
+<!-- A function with one required argument and two optional arguments. For `z` to be specified, `y` must be as well. -->
+# Function: `f(x[, y[, z]])`
+
+<!-- A function with one required argument and two optional arguments. `z` can be specified without `y` -->
+# Function: `f(x[, y][, z])`
+
+<!-- A function with one required argument and an optional set of two arguments. `y` and `z` can optionally be specified together -->
+# Function: `f(x[, y, z])`
+```
+
+
+#### Function-Description
+
+#### Function-Return-Value
+
+#### Function-Arguments
+
+
+# Function: `foo(x: string[, y: number]): boolean`
+# Function: `foo(x[, y[, z]])`
+
+```
+f()
+f(x)
+f(x, y)
+f(x[, y])
+f(x, y[, z])
+f(x[, y[, z]])
+```
+
+
+
+
+The `foo` function that does really cool things.
+
+`x` is the first argument. `y` is the optional second argument.
+
+It does things and returns an output.
+
+###### Arguments:
+
+*   **x** - `string`
+*   **y** - `number` - _optional_
+
+###### Returns: `boolean`
+
+###### Example:
+
+```js
+const value = foo('abc');
+assert(value, true);
+```
+
+###### Example: foo called with both arguments
+
+```js
+const value = foo('xyz', 123);
+assert(value, false);
+```
 
 ---
 
@@ -240,3 +336,4 @@ Parameters:
 [Parameter-Optional]: #parameter-optional
 [Parameter-Default-Value]: #parameter-default-value
 [Parameter-Description]: #parameter-description
+[Specification]: #specification
