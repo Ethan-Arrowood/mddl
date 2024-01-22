@@ -13,13 +13,28 @@ The language is particularly specified in order to provide a consistent and reli
 The ABNF formal grammar for **mddl**.
 
 ```abnf
-Documentation = Object-Definition 
+Documentation = Object-Definition
+
+; Function
+Function-Definition            = Function-Declaration [NL Function-Description] [NL Function-Arguments] NL Function-Returns
+Function-Declaration           = Markdown-Heading SP "Function: `" FD-Expression "`"
+Function-Description           = Markdown
+Function-Arguments             = "###### Arguments:" NL *(NL "-" SP Parameter-Definition)
+Function-Returns               = "###### Returns: `" TypeScript-Type "`" [SP "-" SP Markdown-Text]
+
+; Function Declaration Expression
+FD-Expression                  = ECMAScript-IdentifierName "(" [FD-Parameters] ")"
+FD-Parameters                  = (Required-FD-Parameters / Optional-Starting-FD-Parameter) *(Optional-FD-Parameter)
+Required-FD-Parameters         = FD-Parameter *("," SP FD-Parameter)
+Optional-Starting-FD-Parameter = "[" SP FD-Parameter [Optional-FD-Parameter] "]"
+Optional-FD-Parameter          = "[," SP FD-Parameter [Optional-FD-Parameter] "]"
+FD-Parameter                   = ECMAScript-IdentifierName
 
 ; Object
 Object-Definition  = Object-Identifier [NL Object-Description] [NL Object-Parameters]
 Object-Identifier  = Markdown-Heading SP "Object:" SP ECMAScript-IdentifierName
 Object-Description = Markdown
-Object-Parameters  = "Parameters:" NL *("-" SP Parameter)
+Object-Parameters  = "Parameters:" NL *(NL "-" SP Parameter-Definition)
 
 ; Parameter
 Parameter-Definition  = Parameter-Identifier SP "-" SP Parameter-Type [SP Parameter-Optional] [SP Parameter-Description]
@@ -146,8 +161,6 @@ The forth part of a [Parameter][]. It is not required. Must come after all other
 An [Object][] definition is a multi-line representation of a JavaScript object. It is comprised of three distinct parts:
 [Object-Identifier][], [Object-Description][], and [Object-Parameters][].
 
-The [Object-Description][] is the only _optional_ part.
-
 #### Object-Identifier
 
 The first part of an [Object][]. It must be a markdown heading immediately followed by the text `Object: `, and then the identifier itself. The identifier must be a valid [JavaScript Identifier][].
@@ -160,9 +173,9 @@ The first part of an [Object][]. It must be a markdown heading immediately follo
 
 #### Object-Description
 
-Optionally following the [Object-Identifier][], any valid multi-line markdown will comprise the [Object][] description. Everything up to the [Object-Parameters][] will be included in the [Object][] description.
+Optionally following the [Object-Identifier][], any valid multi-line markdown comprises the [Object][] description. Everything up to the [Object-Parameters][] will be included in the [Object][] description.
 
-###### Example
+###### Example:
 
 ````md
 # Object: name
@@ -215,7 +228,83 @@ Parameters:
 
 ### Function
 
-> Coming soon!
+A [Function][] definition is a multi-line representation of a JavaScript function. It is comprised of X distinct parts: [Function-Identifier][], [Function-Description][], [Function-Return-Value][], [Function-Arguments][], and [Examples][].
+
+#### Function-Identifier
+
+The specification for a [Function-Identifier][] is complex. Loosely, it is comprised of markdown heading, the text `Function: `, the function name, and then the function arguments. See the examples below for various possibilities and refer to the [Specification][] for the exact definition.
+
+###### Example: Function identifiers
+
+```md
+<!-- A function with zero arguments -->
+# Function: `f()`
+
+<!-- A function with one argument -->
+# Function: `f(x)`
+
+<!-- A function with one argument -->
+# Function: `f([x])`
+
+<!-- A function with two arguments -->
+# Function: `f(x, y)`
+
+<!-- A function with one required argument and one optional argument -->
+# Function: `f(x[, y])`
+
+<!-- A function with two required arguments and one optional argument-->
+# Function: `f(x, y[, z])`
+
+<!-- A function with one required argument and two optional arguments. For `z` to be specified, `y` must be as well. -->
+# Function: `f(x[, y[, z]])`
+
+<!-- A function with one required argument and two optional arguments. `z` can be specified without `y` -->
+# Function: `f(x[, y][, z])`
+
+<!-- A function with one required argument and an optional set of two arguments. `y` and `z` can optionally be specified together -->
+# Function: `f(x[, y, z])`
+```
+
+#### Function-Description
+
+Optionally following the [Function-Identifier][], any valid multi-line markdown comprises the [Function-Description][]. Everything up to the [Function-Return-Value][] will be included in the [Function-Description][].
+
+###### Example: Function definition (incomplete) with description
+
+```md
+# Function `add(x, y)`
+
+A **function** for adding [two]() _numbers_ together!
+```
+
+#### Function-Return-Value
+
+A required field that also acts as a terminating line for the [Function-Description][], it must begin with the text `###### Returns:`, then contain a valid TypeScript Value wrapped in `` ` `` characters.
+
+###### Example: Function Definition with return value
+
+```md
+# Function `add(x, y)`
+
+###### Returns: `number`
+```
+
+#### Function-Arguments
+
+Only required if the [Function-Identifier][] contains arguments as well (referred to as `FD-Parameters` in the [grammar](#specification)). This section starts on a new line with the text: `###### Arguments:`. Following this is a unordered bulleted list of Parameters.
+
+###### Example: A Function definition
+
+```md
+# Function: add(x, y)
+
+###### Returns: `number`
+
+###### Arguments:
+- **x** - `number`
+- **y** - `number`
+
+```
 
 ---
 
@@ -240,3 +329,4 @@ Parameters:
 [Parameter-Optional]: #parameter-optional
 [Parameter-Default-Value]: #parameter-default-value
 [Parameter-Description]: #parameter-description
+[Specification]: #specification
