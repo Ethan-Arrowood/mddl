@@ -16,8 +16,12 @@ The ABNF formal grammar for **mddl**.
 Documentation = Object-Definition
 
 ; Function
-Function-Definition            = Function-Declaration [NL Function-Description]
+Function-Definition            = Function-Declaration [NL Function-Description] [NL Function-Arguments] NL Function-Returns
 Function-Declaration           = Markdown-Heading SP "Function: `" FD-Expression "`"
+Function-Description           = Markdown
+Function-Arguments             = "###### Arguments:" NL *(NL "-" SP Parameter-Definition)
+Function-Returns               = "###### Returns: `" TypeScript-Type "`" [SP "-" SP Markdown-Text]
+
 ; Function Declaration Expression
 FD-Expression                  = ECMAScript-IdentifierName "(" [FD-Parameters] ")"
 FD-Parameters                  = (Required-FD-Parameters / Optional-Starting-FD-Parameter) *(Optional-FD-Parameter)
@@ -26,13 +30,11 @@ Optional-Starting-FD-Parameter = "[" SP FD-Parameter [Optional-FD-Parameter] "]"
 Optional-FD-Parameter          = "[," SP FD-Parameter [Optional-FD-Parameter] "]"
 FD-Parameter                   = ECMAScript-IdentifierName
 
-Function-Description           = Markdown
-
 ; Object
 Object-Definition  = Object-Identifier [NL Object-Description] [NL Object-Parameters]
 Object-Identifier  = Markdown-Heading SP "Object:" SP ECMAScript-IdentifierName
 Object-Description = Markdown
-Object-Parameters  = "Parameters:" NL *("-" SP Parameter)
+Object-Parameters  = "Parameters:" NL *(NL "-" SP Parameter-Definition)
 
 ; Parameter
 Parameter-Definition  = Parameter-Identifier SP "-" SP Parameter-Type [SP Parameter-Optional] [SP Parameter-Description]
@@ -171,9 +173,9 @@ The first part of an [Object][]. It must be a markdown heading immediately follo
 
 #### Object-Description
 
-Optionally following the [Object-Identifier][], any valid multi-line markdown will comprise the [Object][] description. Everything up to the [Object-Parameters][] will be included in the [Object][] description.
+Optionally following the [Object-Identifier][], any valid multi-line markdown comprises the [Object][] description. Everything up to the [Object-Parameters][] will be included in the [Object][] description.
 
-###### Example
+###### Example:
 
 ````md
 # Object: name
@@ -226,7 +228,7 @@ Parameters:
 
 ### Function
 
-A [Function][] definition is a multi-line representation of a JavaScript function. It is comprised of X distinct parts: [Function-Identifier][], [Function-Description][], [Function-Return-Value][], and [Function-Arguments][].
+A [Function][] definition is a multi-line representation of a JavaScript function. It is comprised of X distinct parts: [Function-Identifier][], [Function-Description][], [Function-Return-Value][], [Function-Arguments][], and [Examples][].
 
 #### Function-Identifier
 
@@ -263,54 +265,45 @@ The specification for a [Function-Identifier][] is complex. Loosely, it is compr
 # Function: `f(x[, y, z])`
 ```
 
-
 #### Function-Description
+
+Optionally following the [Function-Identifier][], any valid multi-line markdown comprises the [Function-Description][]. Everything up to the [Function-Return-Value][] will be included in the [Function-Description][].
+
+###### Example: Function definition (incomplete) with description
+
+```md
+# Function `add(x, y)`
+
+A **function** for adding [two]() _numbers_ together!
+```
 
 #### Function-Return-Value
 
+A required field that also acts as a terminating line for the [Function-Description][], it must begin with the text `###### Returns:`, then contain a valid TypeScript Value wrapped in `` ` `` characters.
+
+###### Example: Function Definition with return value
+
+```md
+# Function `add(x, y)`
+
+###### Returns: `number`
+```
+
 #### Function-Arguments
 
+Only required if the [Function-Identifier][] contains arguments as well (referred to as `FD-Parameters` in the [grammar](#specification)). This section starts on a new line with the text: `###### Arguments:`. Following this is a unordered bulleted list of Parameters.
 
-# Function: `foo(x: string[, y: number]): boolean`
-# Function: `foo(x[, y[, z]])`
+###### Example: A Function definition
 
-```
-f()
-f(x)
-f(x, y)
-f(x[, y])
-f(x, y[, z])
-f(x[, y[, z]])
-```
+```md
+# Function: add(x, y)
 
-
-
-
-The `foo` function that does really cool things.
-
-`x` is the first argument. `y` is the optional second argument.
-
-It does things and returns an output.
+###### Returns: `number`
 
 ###### Arguments:
+- **x** - `number`
+- **y** - `number`
 
-*   **x** - `string`
-*   **y** - `number` - _optional_
-
-###### Returns: `boolean`
-
-###### Example:
-
-```js
-const value = foo('abc');
-assert(value, true);
-```
-
-###### Example: foo called with both arguments
-
-```js
-const value = foo('xyz', 123);
-assert(value, false);
 ```
 
 ---
