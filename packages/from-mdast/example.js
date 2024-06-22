@@ -24,9 +24,9 @@ Parameters:
 `;
 
 const file = new VFile({
-    path: 'input.md',
-    value: testInput
-})
+	path: "input.md",
+	value: testInput,
+});
 
 const mdastTree = unified().use(remarkParse).use(remarkGfm).parse(testInput);
 

@@ -1,27 +1,27 @@
 {
-    "name": "@mddl/from-mdast",
-    "version": "0.0.1",
-    "type": "module",
-    "scripts": {
-        "build": "tsc -p tsconfig.build.json",
-        "format": "biome format --write .",
-        "lint": "biome lint --apply ."
-    },
-    "dependencies": {
-        "@mddl/ast": "workspace:*",
-        "estree-util-is-identifier-name": "3.0.0",
-        "remark-gfm": "4.0.0",
-        "remark-parse": "11.0.0",
-        "unified": "11.0.4",
-        "unist-util-inspect": "8.0.0",
-        "unist-util-position": "5.0.0",
-        "vfile": "6.0.1",
-        "vfile-message": "4.0.2"
-    },
-    "devDependencies": {
-        "@mddl/tsconfig": "workspace:*",
-        "@types/mdast": "4.0.3",
-        "@types/node": "20.9.4",
-        "@types/unist": "3.0.2"
-    }
+	"name": "@mddl/from-mdast",
+	"version": "0.0.1",
+	"type": "module",
+	"scripts": {
+		"build": "tsc -p tsconfig.build.json",
+		"format": "biome format --write .",
+		"lint": "biome lint --write ."
+	},
+	"dependencies": {
+		"@mddl/ast": "workspace:*",
+		"estree-util-is-identifier-name": "3.0.0",
+		"remark-gfm": "4.0.0",
+		"remark-parse": "11.0.0",
+		"unified": "11.0.4",
+		"unist-util-inspect": "8.0.0",
+		"unist-util-position": "5.0.0",
+		"vfile": "6.0.1",
+		"vfile-message": "4.0.2"
+	},
+	"devDependencies": {
+		"@mddl/tsconfig": "workspace:*",
+		"@types/mdast": "4.0.3",
+		"@types/node": "20.9.4",
+		"@types/unist": "3.0.2"
+	}
 }

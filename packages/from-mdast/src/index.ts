@@ -2,7 +2,7 @@ import { position } from "unist-util-position";
 import type { Root as MdastRoot, RootContent } from "mdast";
 import { MddlDocumentation } from "@mddl/ast";
 import { transformObject } from "./transformObject.js";
-import { VFile } from "vfile";
+import type { VFile } from "vfile";
 
 export function toMddl(
 	tree: MdastRoot,
