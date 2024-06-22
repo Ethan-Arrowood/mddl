@@ -1,5 +1,5 @@
-import { MddlObject, MddlParameter } from "@mddl/ast";
-import { RootContent } from "mdast";
+import { MddlObject, type MddlParameter } from "@mddl/ast";
+import type { RootContent } from "mdast";
 import { pointEnd, pointStart, position } from "unist-util-position";
 import type { VFile } from "vfile";
 import { transformParameterList } from "./transformParameterList.js";
@@ -94,7 +94,7 @@ export function transformObject(
 				? {
 						start: startPoint,
 						end: endPoint,
-				  }
+					}
 				: undefined,
 	});
 }

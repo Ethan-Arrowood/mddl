@@ -1,4 +1,7 @@
-import { VFileMessage, Options as VFileMessageOptions } from "vfile-message";
+import {
+	VFileMessage,
+	type Options as VFileMessageOptions,
+} from "vfile-message";
 
 class FromMdastVFileMessage extends VFileMessage {
 	constructor(reason: string, options?: VFileMessageOptions) {

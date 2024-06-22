@@ -3,7 +3,7 @@ import type { List, ListItem } from "mdast";
 import { position } from "unist-util-position";
 import type { VFile } from "vfile";
 import { name } from "estree-util-is-identifier-name";
-import { PhrasingContent } from "mdast";
+import type { PhrasingContent } from "mdast";
 import { ParseRule } from "./parseRule.js";
 
 function transformParameter(

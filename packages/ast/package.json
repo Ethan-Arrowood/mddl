@@ -1,23 +1,21 @@
 {
-    "name": "@mddl/ast",
-    "version": "0.0.1",
-    "exports": {
-        ".": "./dist/index.js"
-    },
-    "files": [
-        "dist"
-    ],
-    "types": "dist/index.d.ts",
-    "scripts": {
-        "build": "tsc",
-        "format": "biome format --write .",
-        "lint": "biome lint --apply ."
-    },
-    "dependencies": {
-        "@types/mdast": "4.0.3",
-        "@types/unist": "3.0.2"
-    },
-    "devDependencies": {
-        "@mddl/tsconfig": "workspace:*"
-    }
+	"name": "@mddl/ast",
+	"version": "0.0.1",
+	"exports": {
+		".": "./dist/index.js"
+	},
+	"files": ["dist"],
+	"types": "dist/index.d.ts",
+	"scripts": {
+		"build": "tsc",
+		"format": "biome format --write .",
+		"lint": "biome lint --write ."
+	},
+	"dependencies": {
+		"@types/mdast": "4.0.3",
+		"@types/unist": "3.0.2"
+	},
+	"devDependencies": {
+		"@mddl/tsconfig": "workspace:*"
+	}
 }
