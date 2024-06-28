@@ -230,11 +230,11 @@ Parameters:
 
 A [Function][] definition is a multi-line representation of a JavaScript function. It is comprised of X distinct parts: [Function-Identifier][], [Function-Description][], [Function-Return-Value][], [Function-Arguments][], and [Examples][].
 
-#### Function-Identifier
+#### Function-Declaration
 
-The specification for a [Function-Identifier][] is complex. Loosely, it is comprised of markdown heading, the text `Function: `, the function name, and then the function arguments. See the examples below for various possibilities and refer to the [Specification][] for the exact definition.
+The specification for a [Function-Declaration][] is complex. Loosely, it is comprised of markdown heading, the text `Function: `, the function name, and then the function arguments. See the examples below for various possibilities and refer to the [Specification][] for the exact definition.
 
-###### Example: Function identifiers
+###### Example: Function declarations
 
 ```md
 <!-- A function with zero arguments -->
@@ -267,7 +267,7 @@ The specification for a [Function-Identifier][] is complex. Loosely, it is compr
 
 #### Function-Description
 
-Optionally following the [Function-Identifier][], any valid multi-line markdown comprises the [Function-Description][]. Everything up to the [Function-Return-Value][] will be included in the [Function-Description][].
+Optionally following the [Function-Declaration][], any valid multi-line markdown comprises the [Function-Description][]. Everything up to the [Function-Return-Value][] will be included in the [Function-Description][].
 
 ###### Example: Function definition (incomplete) with description
 
@@ -281,7 +281,7 @@ A **function** for adding [two]() _numbers_ together!
 
 A required field that also acts as a terminating line for the [Function-Description][], it must begin with the text `###### Returns:`, then contain a valid TypeScript Value wrapped in `` ` `` characters.
 
-###### Example: Function Definition with return value
+###### Example: Function definition with return value
 
 ```md
 # Function `add(x, y)`
@@ -291,9 +291,9 @@ A required field that also acts as a terminating line for the [Function-Descript
 
 #### Function-Arguments
 
-Only required if the [Function-Identifier][] contains arguments as well (referred to as `FD-Parameters` in the [grammar](#specification)). This section starts on a new line with the text: `###### Arguments:`. Following this is a unordered bulleted list of Parameters.
+Only required if the [Function-Declaration][] contains arguments as well (referred to as `FD-Parameters` in the [grammar](#specification)). This section starts on a new line with the text: `###### Arguments:`. Following this is a unordered bulleted list of [Parameters][Parameter].
 
-###### Example: A Function definition
+###### Example: A Function definition with arguments
 
 ```md
 # Function: add(x, y)
@@ -319,6 +319,11 @@ Only required if the [Function-Identifier][] contains arguments as well (referre
 > Coming soon!
 
 [JavaScript Identifier]: https://262.ecma-international.org/14.0/#prod-IdentifierName
+[Function]: #function
+[Function-Arguments]: #function-arguments
+[Function-Declaration]: #function-declaration
+[Function-Description]: #function-description
+[Function-Return-Value]: #function-return-value
 [Object]: #object
 [Object-Identifier]: #object-identifier
 [Object-Description]: #object-description
