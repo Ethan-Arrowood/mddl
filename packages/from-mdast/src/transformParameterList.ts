@@ -16,7 +16,7 @@ function transformParameter(
 ): MddlParameter {
 	// Error early if the Parameter is not minimally correct
 	if (
-		mdastListItemNode.children.length < 0 ||
+		mdastListItemNode.children.length === 0 ||
 		mdastListItemNode.children[0].type !== "paragraph" ||
 		mdastListItemNode.children[0].children.length < 3
 	) {
