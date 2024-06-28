@@ -16,19 +16,21 @@ The ABNF formal grammar for **mddl**.
 Documentation = Object-Definition
 
 ; Function
-Function-Definition            = Function-Declaration [NL Function-Description] [NL Function-Arguments] NL Function-Returns
-Function-Declaration           = Markdown-Heading SP "Function: `" FD-Expression "`"
+Function-Definition            = Function-Declaration [NL Function-Description] [NL Function-Arguments] NL Function-Return-Type
+Function-Declaration           = Markdown-Heading SP "Function: `" Function-Declaration-Expression "`"
 Function-Description           = Markdown
 Function-Arguments             = "###### Arguments:" NL *(NL "-" SP Parameter-Definition)
-Function-Returns               = "###### Returns: `" TypeScript-Type "`" [SP "-" SP Markdown-Text]
+Function-Return-Type           = "###### Returns: `" TypeScript-Type "`" [SP "-" SP Markdown-Text]
 
 ; Function Declaration Expression
-FD-Expression                  = ECMAScript-IdentifierName "(" [FD-Parameters] ")"
-FD-Parameters                  = (Required-FD-Parameters / Optional-Starting-FD-Parameter) *(Optional-FD-Parameter)
-Required-FD-Parameters         = FD-Parameter *("," SP FD-Parameter)
-Optional-Starting-FD-Parameter = "[" SP FD-Parameter [Optional-FD-Parameter] "]"
-Optional-FD-Parameter          = "[," SP FD-Parameter [Optional-FD-Parameter] "]"
-FD-Parameter                   = ECMAScript-IdentifierName
+Function-Declaration-Expression                   = ECMAScript-IdentifierName "(" [Function-Declaration-Parameters] ")"
+Function-Declaration-Parameters                   = Required-Function-Declaration-Parameters [Optional-Function-Declaration-Parameters]
+Function-Declaration-Parameters                   =/ Optional-Starting-Function-Declaration-Parameters
+Required-Function-Declaration-Parameters          = Abstract-Function-Declaration-Parameters
+Optional-Starting-Function-Declaration-Parameters = "[" SP Abstract-Function-Declaration-Parameters "]"
+Optional-Function-Declaration-Parameters          = "[," SP Abstract-Function-Declaration-Parameters "]"
+Abstract-Function-Declaration-Parameters          = Function-Declaration-Parameter-Identifier *("," SP Function-Declaration-Parameter-Identifier)
+Function-Declaration-Parameter-Identifier         = ECMAScript-IdentifierName
 
 ; Object
 Object-Definition  = Object-Identifier [NL Object-Description] [NL Object-Parameters]
@@ -65,20 +67,20 @@ A more illustrative guide to the **mddl** specification
 
 ### Parameter
 
-A [Parameter][] definition is a single-line representation of a JavaScript value. It is made up of multiple parts separated by hyphen (`-`) characters: [Parameter-Identifier][], [Parameter-Type-Value][], [Parameter-Optional][], and [Parameter-Description][].
+A [Parameter][] definition is a single-line representation of a JavaScript value. It is made up of multiple parts separated by hyphen (`-`) characters: [Parameter-Identifier][], [Parameter-Type][], [Parameter-Optional][], and [Parameter-Description][].
 
-The [Parameter-Identifier][] and [Parameter-Type-Value][] are required.
+The [Parameter-Identifier][] and [Parameter-Type][] are required.
 
 ##### Minimal Example:
 
 ```md
-**Identifier** - `Type-Value`
+**Identifier** - `Type`
 ```
 
 ##### Complete Example:
 
 ```md
-**Identifier** - `Type-Value` - _optional_ - Default: `Value` - Description
+**Identifier** - `Type` - _optional_ - Default: `Value` - Description
 ```
 
 ##### Example: All Possibilities
@@ -102,7 +104,7 @@ The first part of a [Parameter][]. It is required, surrounded by double-asterisk
 **name**
 ```
 
-#### Parameter-Type-Value
+#### Parameter-Type
 
 The second part of a [Parameter][]. It is required, surrounded by backtick (`` ` ``) characters, and be a valid TypeScript type expression.
 
@@ -114,7 +116,7 @@ The second part of a [Parameter][]. It is required, surrounded by backtick (`` `
 
 #### Parameter-Optional
 
-The third part of a [Parameter][]. It is not required. It is denoted by the text `_optional_`. If present, it must immediately follow the [Parameter-Type-Value][]. Additionally, when present, a [Parameter-Default-Value][] can also be specified.
+The third part of a [Parameter][]. It is not required. It is denoted by the text `_optional_`. If present, it must immediately follow the [Parameter-Type][]. Additionally, when present, a [Parameter-Default-Value][] can also be specified.
 
 ###### Example
 
@@ -228,11 +230,11 @@ Parameters:
 
 ### Function
 
-A [Function][] definition is a multi-line representation of a JavaScript function. It is comprised of X distinct parts: [Function-Identifier][], [Function-Description][], [Function-Return-Value][], [Function-Arguments][], and [Examples][].
+A [Function][] definition is a multi-line representation of a JavaScript function. It is comprised of X distinct parts: [Function-Identifier][], [Function-Description][], [Function-Return-Type][], [Function-Arguments][], and [Examples][].
 
 #### Function-Declaration
 
-The specification for a [Function-Declaration][] is complex. Loosely, it is comprised of markdown heading, the text `Function: `, the function name, and then the function arguments. See the examples below for various possibilities and refer to the [Specification][] for the exact definition.
+The specification for a [Function-Declaration][] is complex. Loosely, it is comprised of markdown heading, the text `Function: `, and the function identifier and arguments surrounded by `` ` `` characters. See the examples below for various possibilities and refer to the [Specification][] for the exact definition.
 
 ###### Example: Function declarations
 
@@ -243,31 +245,25 @@ The specification for a [Function-Declaration][] is complex. Loosely, it is comp
 <!-- A function with one argument -->
 # Function: `f(x)`
 
-<!-- A function with one argument -->
+<!-- A function with one optional argument -->
 # Function: `f([x])`
 
-<!-- A function with two arguments -->
+<!-- A function with multiple arguments -->
 # Function: `f(x, y)`
 
 <!-- A function with one required argument and one optional argument -->
 # Function: `f(x[, y])`
 
-<!-- A function with two required arguments and one optional argument-->
+<!-- A function with multiple required arguments and one optional argument-->
 # Function: `f(x, y[, z])`
 
-<!-- A function with one required argument and two optional arguments. For `z` to be specified, `y` must be as well. -->
-# Function: `f(x[, y[, z]])`
-
-<!-- A function with one required argument and two optional arguments. `z` can be specified without `y` -->
-# Function: `f(x[, y][, z])`
-
-<!-- A function with one required argument and an optional set of two arguments. `y` and `z` can optionally be specified together -->
+<!-- A function with one required argument and multiple optional arguments. -->
 # Function: `f(x[, y, z])`
 ```
 
 #### Function-Description
 
-Optionally following the [Function-Declaration][], any valid multi-line markdown comprises the [Function-Description][]. Everything up to the [Function-Return-Value][] will be included in the [Function-Description][].
+Optionally following the [Function-Declaration][], any valid multi-line markdown comprises the [Function-Description][]. Everything up to the [Function-Return-Type][] will be included in the [Function-Description][].
 
 ###### Example: Function definition (incomplete) with description
 
@@ -277,16 +273,16 @@ Optionally following the [Function-Declaration][], any valid multi-line markdown
 A **function** for adding [two]() _numbers_ together!
 ```
 
-#### Function-Return-Value
+#### Function-Return-Type
 
-A required field that also acts as a terminating line for the [Function-Description][], it must begin with the text `###### Returns:`, then contain a valid TypeScript Value wrapped in `` ` `` characters.
+A required field that also acts as a terminating line for the [Function-Description][], it must begin with the text `###### Returns:`, then contain a valid TypeScript Type wrapped in `` ` `` characters.
 
-###### Example: Function definition with return value
+###### Example: Function definition with return type
 
 ```md
-# Function `add(x, y)`
+# Function `ping()`
 
-###### Returns: `number`
+###### Returns: `string`
 ```
 
 #### Function-Arguments
@@ -296,7 +292,7 @@ Only required if the [Function-Declaration][] contains arguments as well (referr
 ###### Example: A Function definition with arguments
 
 ```md
-# Function: add(x, y)
+# Function: `add(x, y)`
 
 ###### Returns: `number`
 
@@ -323,14 +319,14 @@ Only required if the [Function-Declaration][] contains arguments as well (referr
 [Function-Arguments]: #function-arguments
 [Function-Declaration]: #function-declaration
 [Function-Description]: #function-description
-[Function-Return-Value]: #function-return-value
+[Function-Return-Type]: #function-return-value
 [Object]: #object
 [Object-Identifier]: #object-identifier
 [Object-Description]: #object-description
 [Object-Parameters]: #object-parameters
 [Parameter]: #parameter
 [Parameter-Identifier]: #parameter-identifier
-[Parameter-Type-Value]: #parameter-type-value
+[Parameter-Type]: #parameter-type
 [Parameter-Optional]: #parameter-optional
 [Parameter-Default-Value]: #parameter-default-value
 [Parameter-Description]: #parameter-description

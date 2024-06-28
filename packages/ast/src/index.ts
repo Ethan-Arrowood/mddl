@@ -1,9 +1,10 @@
 import type { Position } from "unist";
-import type { Parent, RootContent, PhrasingContent, Data } from "mdast";
+import type { Parent, RootContent, PhrasingContent } from "mdast";
 
 declare module "mdast" {
 	interface RootContentMap {
 		mddlObject: MddlObject;
+		mddlFunction: MddlFunction;
 	}
 }
 
@@ -19,7 +20,6 @@ export class MddlDocumentation implements Parent {
 	type = "mddl-documentation" as const;
 
 	children: RootContent[];
-	data?: Data | undefined;
 	position?: Position | undefined;
 
 	constructor({ children = [], position }: DocumentationNodeOptions) {
@@ -38,7 +38,6 @@ export class MddlObject implements Parent {
 	type = "mddl-object" as const;
 
 	children: RootContent[];
-	data?: Data | undefined;
 	position?: Position | undefined;
 	identifier: string;
 	parameters: MddlParameter[];
@@ -87,6 +86,38 @@ export class MddlParameter implements Parent {
 		this.identifier = identifier;
 		this.optional = optional;
 		this.typeValue = typeValue;
+		this.position = position;
+	}
+}
+
+export interface MddlFunctionOptions extends NodeOptions {
+	identifier: string;
+	/** Description Nodes */
+	children?: RootContent[];
+	functionArguments?: MddlParameter[];
+	returnType: string;
+}
+
+export class MddlFunction implements Parent {
+	type = "mddl-function" as const;
+
+	children: RootContent[];
+	functionArguments: MddlParameter[];
+	returnType: string;
+	identifier: string;
+	position?: Position | undefined;
+
+	constructor({
+		children = [],
+		functionArguments = [],
+		returnType,
+		identifier,
+		position
+	}: MddlFunctionOptions) {
+		this.children = children;
+		this.functionArguments = functionArguments;
+		this.returnType = returnType;
+		this.identifier = identifier;
 		this.position = position;
 	}
 }
