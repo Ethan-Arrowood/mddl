@@ -9,6 +9,9 @@ class FromMdastVFileMessage extends VFileMessage {
 	}
 }
 
+/**
+ * Generates a message as: `Failed to parse ${parseNode}. Expected ${expectedNode} node${extraReason ? `${extraReason}.` : "."}`
+ */
 export class ParseRule extends FromMdastVFileMessage {
 	constructor(
 		parseNode: string,

@@ -4,6 +4,7 @@ import { VFile } from "vfile";
 import { ParseRule } from "./parseRule.js";
 import { pointEnd, pointStart, position } from "unist-util-position";
 import { name } from "estree-util-is-identifier-name";
+import { toPosition } from "./toPosition.js";
 
 interface FunctionDeclarationExpression {
 	identifier: string;
@@ -39,58 +40,28 @@ function transformFunctionDeclarationExpression (
 		return result
 	}
 
+	const argStringList = declarationValue.slice(leftParenIndex+1, rightParenIndex).split(',');
 	let optional = false;
-	let declaredArgumentListSlice = declarationValue.slice(leftParenIndex+1, rightParenIndex);
-
-	// Optional Starting Function Declaration Parameters
-	if (declaredArgumentListSlice.indexOf('[') === 0) {
-		// Validate closing bracket
-		if (declaredArgumentListSlice.indexOf(']') === -1) {
-			throw file.fail(
-				new ParseRule("Function Declaration Expression", "]", { place: position(mdastInlineCodeNode) })
-			)
-		}
-
-		// trim off brackets
-		declaredArgumentListSlice = declaredArgumentListSlice.slice(1, -1)
-		optional = true;
-	}
-
-	while (declaredArgumentListSlice !== '') {
-		let commaIndex = declaredArgumentListSlice.indexOf(',');
-
-		if (commaIndex === -1) { // last argument
-			var identifier = declaredArgumentListSlice
-			declaredArgumentListSlice = '';
-		} else {
-			const leftBracketIndex = declaredArgumentListSlice.indexOf('[');
-
-			if (leftBracketIndex < commaIndex) {
-				// Validate closing bracket
-				if (declaredArgumentListSlice.indexOf(']') === -1) {
-					throw file.fail(
-						new ParseRule("Function Declaration Expression", "]", { place: position(mdastInlineCodeNode) })
-					)
-				}
-
-				// trim off brackets
-				declaredArgumentListSlice = declaredArgumentListSlice.slice(leftBracketIndex, -1)
-				optional = true;
+	for (let i = 0; i < argStringList.length; i++) {
+		const argString = argStringList[i].trim();
+		const leftBracketIndex = argString.indexOf('[');
+		const rightBracketIndex = argString.indexOf(']');
+		if (leftBracketIndex === 1 && rightBracketIndex === argString.length - 1) {
+			result.declaredArgumentList.push({ name: argString.slice(1, -1), optional: true })
+		} else if (leftBracketIndex !== -1 && rightBracketIndex === -1) {
+			if (argStringList[argStringList.length-1].indexOf(']') === -1) {
+				throw file.fail(
+					new ParseRule("Function Declaration Expression", "]", { place: position(mdastInlineCodeNode) })
+				)
 			}
 
-			var identifier = declaredArgumentListSlice.slice(0, commaIndex);
-			declaredArgumentListSlice = declaredArgumentListSlice.slice(commaIndex+1)
+			result.declaredArgumentList.push({ name: argString.slice(0, leftBracketIndex), optional: false })
+			optional = true;
+		} else if (rightBracketIndex !== -1) {
+			result.declaredArgumentList.push({ name: argString.slice(0, rightBracketIndex), optional: optional })
+		} else {
+			result.declaredArgumentList.push({ name: argString, optional: optional })
 		}
-		
-		if (!name(identifier)) {
-			throw file.fail(
-				new ParseRule("Function Declaration Parameter", "valid JavaScript Identifier", {
-					place: position(mdastInlineCodeNode),
-				}),
-			);
-		}
-
-		result.declaredArgumentList.push({ name: identifier, optional })
 	}
 
 	return result;
@@ -139,7 +110,9 @@ export function transformFunction(
 	const {
 		identifier,
 		declaredArgumentList
-	} = transformFunctionDeclarationExpression(nodes[0].children[1], { file })
+	} = transformFunctionDeclarationExpression(nodes[0].children[1], { file });
+
+	console.log(declaredArgumentList);
 
 	let description: RootContent[] = [];
 	let functionArguments: MddlParameter[] = [];
@@ -147,15 +120,36 @@ export function transformFunction(
 	const startPoint = pointStart(nodes[0]);
 	let endPoint = pointEnd(nodes[0]);
 
+	let returnType = 'null';
+
+	for (let i = 1; i < nodes.length; i++) {
+		const node = nodes[i];
+		switch (node.type) {
+			case 'paragraph': {
+				if (node.children.length === 0 || node.children[0].type !== 'text') {
+					throw file.fail(new ParseRule("Function", "Paragraph", "containing a Text node", { place: position(nodes[i]) }))
+				}
+
+				const textNode = node.children[0];
+				if (textNode.value.startsWith('Returns: ')) {
+					if (node.children.length !== 2 || node.children[1].type !== 'inlineCode') {
+						throw file.fail(new ParseRule("Function", "InlineCode", "return type should be surrounded with ` characters", { place: position(nodes[i]) }))
+					}
+
+					returnType = node.children[1].value;
+				}
+
+				break;
+			}
+			default: throw file.fail(new ParseRule("Function", "Paragraph", `. Received ${node.type}`, { place: position(nodes[i]) }))
+		}
+	}
+
 	return new MddlFunction({
 		children: description,
 		identifier,
 		returnType,
 		functionArguments,
-		position: 
-			startPoint && endPoint
-				? { start: startPoint,
-					end: endPoint,
-				} : undefined
+		position: toPosition(startPoint, endPoint)
 	})
 }

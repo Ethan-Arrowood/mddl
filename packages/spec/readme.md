@@ -19,8 +19,8 @@ Documentation = Object-Definition
 Function-Definition            = Function-Declaration [NL Function-Description] [NL Function-Arguments] NL Function-Return-Type
 Function-Declaration           = Markdown-Heading SP "Function: `" Function-Declaration-Expression "`"
 Function-Description           = Markdown
-Function-Arguments             = "###### Arguments:" NL *(NL "-" SP Parameter-Definition)
-Function-Return-Type           = "###### Returns: `" TypeScript-Type "`" [SP "-" SP Markdown-Text]
+Function-Arguments             = "Arguments:" NL *(NL "-" SP Parameter-Definition)
+Function-Return-Type           = "Returns: `" TypeScript-Type "`" [SP "-" SP Markdown-Text]
 
 ; Function Declaration Expression
 Function-Declaration-Expression                   = ECMAScript-IdentifierName "(" [Function-Declaration-Parameters] ")"
