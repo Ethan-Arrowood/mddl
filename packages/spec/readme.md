@@ -16,11 +16,11 @@ The ABNF formal grammar for **mddl**.
 Documentation = Object-Definition
 
 ; Function
-Function-Definition            = Function-Declaration [NL Function-Description] [NL Function-Arguments] NL Function-Return-Type
+Function-Definition            = Function-Declaration [NL Function-Description] [NL Function-Parameters] NL Function-Return-Type
 Function-Declaration           = Markdown-Heading SP "Function: `" Function-Declaration-Expression "`"
 Function-Description           = Markdown
-Function-Arguments             = "Arguments:" NL *(NL "-" SP Parameter-Definition)
-Function-Return-Type           = "Returns: `" TypeScript-Type "`" [SP "-" SP Markdown-Text]
+Function-Parameters             = 6Markdown-Heading "Parameters:" NL *(NL "-" SP Parameter-Definition)
+Function-Return-Type           = 6Markdown-Heading "Returns: `" TypeScript-Type "`" [SP "-" SP Markdown-Text]
 
 ; Function Declaration Expression
 Function-Declaration-Expression                   = ECMAScript-IdentifierName "(" [Function-Declaration-Parameters] ")"
@@ -230,13 +230,13 @@ Parameters:
 
 ### Function
 
-A [Function][] definition is a multi-line representation of a JavaScript function. It is comprised of X distinct parts: [Function-Identifier][], [Function-Description][], [Function-Return-Type][], [Function-Arguments][], and [Examples][].
+A [Function][] definition is a multi-line representation of a JavaScript function. It is comprised of X distinct parts: [Function-Declaration][], [Function-Description][], [Function-Return-Type][], [Function-Arguments][], and [Examples][].
 
 #### Function-Declaration
 
 The specification for a [Function-Declaration][] is complex. Loosely, it is comprised of markdown heading, the text `Function: `, and the function identifier and arguments surrounded by `` ` `` characters. See the examples below for various possibilities and refer to the [Specification][] for the exact definition.
 
-###### Example: Function declarations
+###### Example: Function declarations part of a function definition
 
 ```md
 <!-- A function with zero arguments -->
