@@ -4,6 +4,7 @@ import { pointEnd, pointStart, position } from "unist-util-position";
 import type { VFile } from "vfile";
 import { transformParameterList } from "./transformParameterList.js";
 import { ParseRule } from "./parseRule.js";
+import { toPosition } from "./toPosition.js";
 
 export function transformObject(
 	nodes: RootContent[],
@@ -89,12 +90,6 @@ export function transformObject(
 		children: description,
 		identifier,
 		parameters,
-		position:
-			startPoint && endPoint
-				? {
-						start: startPoint,
-						end: endPoint,
-					}
-				: undefined,
+		position: toPosition(startPoint, endPoint),
 	});
 }

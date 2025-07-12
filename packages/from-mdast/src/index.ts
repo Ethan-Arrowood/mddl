@@ -1,8 +1,12 @@
 import { position } from "unist-util-position";
-import type { Root as MdastRoot, RootContent } from "mdast";
+import type { Heading, Root as MdastRoot, RootContent, Text } from "mdast";
 import { MddlDocumentation } from "@mddl/ast";
 import { transformObject } from "./transformObject.js";
 import type { VFile } from "vfile";
+import { ParseRule } from "./parseRule.js";
+import { transformFunction } from "./transformFunction.js";
+
+type HeadingRange = [Heading, ...RootContent[]];
 
 export function toMddl(
 	tree: MdastRoot,
@@ -12,26 +16,43 @@ export function toMddl(
 		position: position(tree),
 	});
 
-	const headingRanges: RootContent[][] = [];
-	let headingRange: RootContent[] = [];
+	const headingRanges: HeadingRange[] = [];
+	let start;
 	for (let i = 0; i < tree.children.length; i++) {
 		if (tree.children[i].type === "heading") {
-			if (headingRange.length > 0) {
-				headingRanges.push(headingRange);
+			if (start) {
+				headingRanges.push(tree.children.slice(start, i+1) as HeadingRange);
+				start = undefined;
+			} else {
+				start = i;
 			}
-			headingRange = [tree.children[i]];
-		} else {
-			headingRange.push(tree.children[i]);
 		}
 	}
 
-	if (headingRange.length > 0) {
-		headingRanges.push(headingRange);
+	if (start !== undefined) {
+		headingRanges.push(tree.children.slice(start) as HeadingRange);
 	}
 
 	for (const headingRange of headingRanges) {
-		documentation.children.push(transformObject(headingRange, { file }));
+		switch (matchHeading(headingRange[0], { file })) {
+			case "object":
+				documentation.children.push(transformObject(headingRange, { file }));
+			case "function":
+				documentation.children.push(transformFunction(headingRange, { file }));
+		}
 	}
 
 	return documentation;
+}
+
+function matchHeading (node: Heading, { file }: { file: VFile }): 'object' | 'function' {
+	if (node.children.length === 0 || node.children[0].type !== "text") {
+		throw file.fail(new ParseRule("Heading", "Text", "with content", { place: position(node) }));
+	}
+
+	switch(node.children[0].value.trim()) {
+		case "Object:": return 'object';
+		case "Function:": return 'function';
+		default: throw file.fail(new ParseRule("Heading", "Text", "starting with `Object: ` or `Function: `", { place: position(node) }));
+	}
 }
