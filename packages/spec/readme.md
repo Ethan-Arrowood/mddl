@@ -38,13 +38,13 @@ Object-Identifier  = Markdown-Heading SP "Object:" SP ECMAScript-IdentifierName
 Object-Description = Markdown
 Object-Parameters  = "Parameters:" NL *(NL "-" SP Parameter-Definition)
 
-; Parameter
-Parameter-Definition  = Parameter-Identifier SP "-" SP Parameter-Type [SP Parameter-Optional] [SP Parameter-Description]
-Parameter-Identifier  = "**" ECMAScript-IdentifierName "**"
-Parameter-Type        = "`" TypeScript-Type "`"
-Parameter-Optional    = "- _optional_" [SP Parameter-Default]
-Parameter-Default     = "- Default: `" Value "`"
-Parameter-Description = "-" SP Markdown-Text
+; Property
+Property-Definition  = Property-Identifier SP "-" SP Property-Type [SP Property-Optional] [SP Property-Description]
+Property-Identifier  = "**" ECMAScript-IdentifierName "**"
+Property-Type        = "`" TypeScript-Type "`"
+Property-Optional    = "- _optional_" [SP Property-Default]
+Property-Default     = "- Default: `" Value "`"
+Property-Description = "-" SP Markdown-Text
 
 ; Utilities
 SP = " "
@@ -55,35 +55,51 @@ Markdown-Heading          = valid markdown heading (1*6"#")
 Value                     = valid value for specified type
 Markdown                  = valid block of markdown text
 Markdown-Text             = valid markdown line of text
-ECMAScript-IdentifierName = https://262.ecma-international.org/14.0/#prod-IdentifierName
+ECMAScript-IdentifierName = https://262.ecma-international.org/#prod-IdentifierName
 TypeScript-Type           = valid typescript type expression
 ```
 
-## Definitions
+## MDDL Definitions
 
 A more illustrative guide to the **mddl** specification
 
 ---
 
-### Parameter
+### Example
 
-A [Parameter][] definition is a single-line representation of a JavaScript value. It is made up of multiple parts separated by hyphen (`-`) characters: [Parameter-Identifier][], [Parameter-Type][], [Parameter-Optional][], and [Parameter-Description][].
+An [Example][] definition is a general purpose section that can be included in many other definitions to provide detailed examples of how to use the respective definition. It is a multi-line section that starts with 6 markdown headings and the text `Example:` followed by a descriptive name for the example. Then it can contain any valid markdown within the section. This specification itself uses [Example][] definitions to provide examples of how to use the various definitions.
 
-The [Parameter-Identifier][] and [Parameter-Type][] are required.
+###### Example: An Example definition
 
-##### Minimal Example:
+````md
+###### Example: A simple example
+
+```js
+console.log('Hello, world!');
+```
+````
+
+### Property
+
+A [Property][] definition is a single-line representation of a JavaScript value. It is made up of multiple parts separated by hyphen (`-`) characters: [Property-Identifier][], [Property-Type][], [Property-Optional][], and [Property-Description][].
+
+The [Property-Identifier][] and [Property-Type][] are required.
+
+Since this is a single-line definition it cannot include an [Example][] definition. However, the [Property-Description][] can include any valid Markdown that fits on a single line and can serve this purpose.
+
+###### Example: Minimal Property Definition
 
 ```md
 **Identifier** - `Type`
 ```
 
-##### Complete Example:
+###### Example: Complete Property Definition
 
 ```md
 **Identifier** - `Type` - _optional_ - Default: `Value` - Description
 ```
 
-##### Example: All Possibilities
+##### Example: All Property Definition Possibilities
 
 ```md
 **a** - `string`
@@ -94,93 +110,146 @@ The [Parameter-Identifier][] and [Parameter-Type][] are required.
 **f** - `string` - _optional_ - Default: `'1'` - A **description**
 ```
 
-#### Parameter-Identifier
+#### Property-Identifier
 
-The first part of a [Parameter][]. It is required, surrounded by double-asterisk (`**`) characters, and be a valid [JavaScript identifier][].
+The first part of a [Property][]. It is required, surrounded by double-asterisk (`**`) characters, and be a valid [JavaScript identifier][].
 
-###### Example
+###### Example: Property Definition Identifier field
 
 ```md
 **name**
 ```
 
-#### Parameter-Type
+#### Property-Type
 
-The second part of a [Parameter][]. It is required, surrounded by backtick (`` ` ``) characters, and be a valid TypeScript type expression.
+The second part of a [Property][]. It is required, surrounded by backtick (`` ` ``) characters, and must be a valid TypeScript type expression.
 
-###### Example
+###### Example: Property Definition Type field
 
 ```md
 **name** - `string`
 ```
 
-#### Parameter-Optional
+#### Property-Optional
 
-The third part of a [Parameter][]. It is not required. It is denoted by the text `_optional_`. If present, it must immediately follow the [Parameter-Type][]. Additionally, when present, a [Parameter-Default-Value][] can also be specified.
+The third part of a [Property][]. It is optional. It is denoted by the text `_optional_`. If present, it must immediately follow the [Property-Type][]. Additionally, when present, a [Property-Default-Value][] can also be specified.
 
-###### Example
+###### Example: Property Definition Optional field
 
 ```md
 **name** - `string` - _optional_
 ```
 
-#### Parameter-Default-Value
+#### Property-Default-Value
 
-A default value is only specifiable when [Parameter-Optional][] is. It must start with the text `Default: `, and then the value itself must be wrapped in backtick (`` ` ``) characters.
+A default value is only specifiable when [Property-Optional][] is specified. It must start with the text `Default: `, and then the value itself must be wrapped in backtick (`` ` ``) characters. The value must be a valid TypeScript value based on the [Property-Type][].
 
-###### Example
+###### Example: Property Default Value field
 
 ```md
 **name** - `string` - _optional_ - Default: `"mddl"`
 ```
 
-#### Parameter-Description
+#### Property-Description
 
-The forth part of a [Parameter][]. It is not required. Must come after all other parts (such as [Parameter-Optional][]). The description can be any valid Markdown that fits on a single line.
+The forth part of a [Property][]. It is not required. Must come after all other parts (such as [Property-Optional][]). The description can be any valid Markdown that fits on a single line.
 
-###### Example: Without Optional
+###### Example: Property Definition without Optional field and with Description field
 
 ```md
 **name** - `string` - The name property
 ```
 
-###### Example: With Optional
+###### Example: Property Definition with Optional and Description fields
 
 ```md
 **name** - `string` - _optional_ - The name property
 ```
 
-###### Example: With Default Value
+###### Example: Property Definition with Optional, Default Value, and Description fields
 
 ```md
 **name** - `string` - _optional_ - Default: `"mddl"` - The name property
+```
+
+### Property-Object
+
+A special type of [Property][] that is used to define a JavaScript `Object` type. It is a [Property][] that has a [Property-Type][] of `Object`. In its simplest form, it can still be defined as a single line, but for more specificity, multiple nested [Property][] definitions can be used. Furthermore, it may be better to define the respective property as a distinct [Object][], [Type][], or [Interface][] definition and then reference that definition in the [Property-Type][]. This can also be used to define more complex types such as if a function parameter can be `string | Object`, then again it may be best to define the specific `Object` as a separate definition and reference it directly, but otherwise, you can still define the properties of the object on the following lines.
+
+For the purposes of this specification, the top-level [Property][] does not necessarily need to be preceded by a list character. Though in most cases, it will be (such as in an [Object-Properties][] or [Function-Parameters][] list).
+
+Since [Object-Property][] is specifically comprised of multiple single-line [Property][] definitions, it too cannot contain an [Example][] definition. It is recommend to use a proper [Object][] definition instead if you want to include an [Example][].
+
+###### Example: Object-Property with a single line definition
+
+```md
+**address** - `Object` - An ambiguous address object
+```
+
+###### Example: Object-Property with a multi-line definition
+
+```md
+**address** - `Object` - A home address
+- **street** - `string` - The street name
+- **city** - `string` - The city name
+- **state** - `string` - The state name
+- **zip** - `string` - The ZIP code
+```
+
+###### Example: Object-Property with a complex type
+
+```md
+**address** - `string | Object` - A home address.
+- **street** - `string` - The street name
+- **city** - `string` - The city name
+- **state** - `string` - The state name
+- **zip** - `string` - The ZIP code
+```
+
+###### Example: Object-Property with a reference to an [Object][] definition
+
+```md
+**address** - `Address` - A home address.
+
+<!-- Later in the document -->
+# Object: `Address`
+
+A home address.
+
+###### Properties:
+
+- **street** - `string` - The street name
+- **city** - `string` - The city name
+- **state** - `string` - The state name
+- **zip** - `string` - The ZIP code
 ```
 
 ---
 
 ### Object
 
-An [Object][] definition is a multi-line representation of a JavaScript object. It is comprised of three distinct parts:
-[Object-Identifier][], [Object-Description][], and [Object-Parameters][].
+An [Object][] definition is a multi-line representation of a JavaScript object. It is comprised of three distinct parts: [Object-Identifier][], [Object-Description][], and [Object-Properties][]. Only the [Object-Identifier][] is technically required, though the other fields are recommended for properly documenting the object. Omitting [Object-Properties][] is equivalent to specifying the generic `Object` type, which is not very useful but sometimes necessary for ambiguous types.
+
+It can also include [Example][] definitions.
 
 #### Object-Identifier
 
-The first part of an [Object][]. It must be a markdown heading immediately followed by the text `Object: `, and then the identifier itself. The identifier must be a valid [JavaScript Identifier][].
+The first part of an [Object][]. It must be a markdown heading immediately followed by the text `Object: `, and then the identifier itself surrounded by `` ` `` characters. The identifier must be a valid [JavaScript Identifier][]. This definition should be used to define actual exported JavaScript objects within a project. For type-only definitions use a [Interface][] definition instead. For example, if the project exports an object such as `HTTP_METHODS` defining the set of HTTP methods, then you should document that as an [Object][] definition since it can be referenced and used in code. However, if the export is simply a type such as like `HTTPServerOptions`, then you should use a [Interface][] definition instead.
 
-###### Example: An empty object named `name`
+###### Example: Object definition (incomplete) with an identifier
 
 ```md
-# Object: name
+# Object: `name`
 ```
 
 #### Object-Description
 
-Optionally following the [Object-Identifier][], any valid multi-line markdown comprises the [Object][] description. Everything up to the [Object-Parameters][] will be included in the [Object][] description.
+Optionally following the [Object-Identifier][], any valid multi-line markdown comprises the [Object][] description. Everything up to the [Object-Properties][] will be included in the [Object][] description.
 
-###### Example:
+###### Example: Object definition with a description
 
 ````md
-# Object: name
+# Object: `name`
 
 The object description.
 
@@ -192,37 +261,40 @@ console.log('mddl');
 ```
 ````
 
-#### Object-Parameters
+#### Object-Properties
 
-Optionally following the [Object-Description][], or the [Object-Identifier][] (if a description does not exist), is the parameter list. It must start with the Text node `Parameters:`. Next, object parameters should be a bulleted list which each List Item node containing a single [Parameter][].
+Optionally following the [Object-Description][] or the [Object-Identifier][] (if a description does not exist), is the property list. It must start with 6 markdown headings and the text `Properties:`. Then using an unordered list, each property is defined as a [Property][] or [Property-Object][] definition.
+
+The spacing between the bullet and the [Property][] or [Property-Object][] is not specified. Some tools such as [remark-lint](https://github.com/remarkjs/remark-lint) will include a [List Item Indent](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-list-item-indent#readme) rule that enforces additional spacing and that is okay.
 
 ###### Example: An object named `name`, without a description, with parameters
 
 ```md
 # Object: name
 
-Parameters:
+A name of a person. The `middle` name is not required.
 
-*   **first** - `string`
-*   **middle** - `string` - _optional_
-*   **last** - `string`
+###### Properties:
+
+- **first** - `string`
+- **middle** - `string` - _optional_
+- **last** - `string`
 
 ```
 
-> The spacing between the bullet and the [Parameter-Identifier][] is not specified. The gap demonstrated in this example is the [remark-lint](https://github.com/remarkjs/remark-lint) [List Item Indent](https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-list-item-indent#readme) rule.
-
-###### Example: An object named `name`, with a description and parameters
+###### Example: A complex object definition
 
 ```md
-# Object: name
+# Object: `person`
 
-A name of a person. The `middle` name is not required.
+###### Properties:
 
-Parameters:
-
-*   **first** - `string`
-*   **middle** - `string` - _optional_
-*   **last** - `string`
+- **name** - `Object` - The person's name
+  - **first** - `string` - The first name
+  - **middle** - `string` - _optional_ - The middle name
+  - **last** - `string` - The last name
+- **age** - `number` - The person's age
+- **address** - `Address` - The person's address
 
 ```
 
@@ -230,40 +302,100 @@ Parameters:
 
 ### Function
 
-A [Function][] definition is a multi-line representation of a JavaScript function. It is comprised of X distinct parts: [Function-Declaration][], [Function-Description][], [Function-Return-Type][], [Function-Arguments][], and [Examples][].
+A [Function][] definition is a multi-line representation of a JavaScript function. It is comprised of the distinct parts: [Function-Declaration][], [Function-Description][], [Function-Parameters][], [Function-Return-Type][], and [Examples][].
+
+###### Example: A complete Function definition
+
+````md
+# Function: `divide(numerator, denominator)`
+
+A function for dividing two numbers.
+
+###### Parameters:
+
+- **numerator** - `number`
+- **denominator** - `number` - Cannot be `0`.
+
+###### Returns: `number`
+
+###### Example: Dividing two numbers
+
+```js
+divide(4, 2); // 2
+```
+````
 
 #### Function-Declaration
 
-The specification for a [Function-Declaration][] is complex. Loosely, it is comprised of markdown heading, the text `Function: `, and the function identifier and arguments surrounded by `` ` `` characters. See the examples below for various possibilities and refer to the [Specification][] for the exact definition.
+The specification for a [Function-Declaration][] is complex. It starts with a markdown heading and  the text `Function: `. Then, surrounded by backtick `` ` `` characters is the function identifier (any valid JavaScript Identifier) and its parameters.
 
-###### Example: Function declarations part of a function definition
+The parameters are enclosed in parentheses `(` and `)`. If the function has no parameters, the parentheses are empty. If the function has one or more parameters, they are separated by commas `,`. The parameters can be required or optional, with optional parameters being wrapped in square brackets `[` and `]`. When a parameter is optional, the `,` should be placed just inside the first square bracket. This pattern follows the same rules as the Node.js documentation. Functions should only be declared once, and the declaration should be the most inclusive form of the function parameters. For example, if a function has multiple overloads, the declaration should be generalized to match all overloads. This is just like how TypeScript handles function overloads.
+
+This syntax is complex, but very powerful. The overall purpose is to give a clear and concise representation of the function's parameters. Including actual types here would be too much information; plus, the later [Function-Parameters][] section will provide the types in greater detail anyways. This part is meant to be a quick reference and representation of the function's parameters.
+
+###### Example: Function declaration with multiple optional parameters
+
+The [`net.createServer()`](https://nodejs.org/docs/latest/api/net.html#netcreateserveroptions-connectionlistener) function is an excellent example for this pattern. It is documented as:
 
 ```md
-<!-- A function with zero arguments -->
+# `net.createServer([options][, connectionListener])`
+```
+
+Indicating that both parameters are optional. You can specify just `options`, just `connectionListener`, or both of them.
+
+This would be loosely equivalent to the following TypeScript:
+
+```ts
+function createServer(options?: Object, connectionListener?: Function) {
+	if (typeof options === 'function') {
+		connectionListener = options;
+		options = undefined;
+	}
+	// ...
+}
+```
+
+###### Example: Complex Function declaration with nested optional parameters
+
+The [`request.end()`](https://nodejs.org/docs/latest/api/net.html#netcreateserveroptions-connectionlistener) method is a more complex example of the capabilities of this pattern. It is documented as:
+
+```md
+# `request.end([data[, encoding]][, callback])`
+```
+
+This declaration indicates that if the first parameter is specified as `data`, then you can optionally specify the second parameter as `encoding`. If you do not specify `data`, then you cannot specify `encoding`. The third parameter, `callback`, is always optional, but also always comes last.
+
+###### Example: Function declaration fields
+
+```md
+<!-- A function with zero parameters -->
 # Function: `f()`
 
-<!-- A function with one argument -->
+<!-- A function with one required parameter -->
 # Function: `f(x)`
 
-<!-- A function with one optional argument -->
+<!-- A function with one optional parameter -->
 # Function: `f([x])`
 
-<!-- A function with multiple arguments -->
+<!-- A function with multiple required parameters -->
 # Function: `f(x, y)`
 
-<!-- A function with one required argument and one optional argument -->
+<!-- A function with one required parameter and one optional parameter -->
 # Function: `f(x[, y])`
 
-<!-- A function with multiple required arguments and one optional argument-->
+<!-- A function with multiple required parameters and one optional parameter-->
 # Function: `f(x, y[, z])`
 
-<!-- A function with one required argument and multiple optional arguments. -->
+<!-- A function with one required parameter and an optional set of parameters. -->
 # Function: `f(x[, y, z])`
+
+<!-- A function with one required parameter, and two sets of optional parameters -->
+# Function : `f(x[, y[, z]][, a])`
 ```
 
 #### Function-Description
 
-Optionally following the [Function-Declaration][], any valid multi-line markdown comprises the [Function-Description][]. Everything up to the [Function-Return-Type][] will be included in the [Function-Description][].
+Optionally following the [Function-Declaration][], any valid multi-line markdown comprises the [Function-Description][]. Everything up to the [Function-Parameters][] or [Function-Return-Type][] is considered apart of the [Function-Description][].
 
 ###### Example: Function definition (incomplete) with description
 
@@ -272,6 +404,23 @@ Optionally following the [Function-Declaration][], any valid multi-line markdown
 
 A **function** for adding [two]() _numbers_ together!
 ```
+
+#### Function-Parameters
+
+Only required if the [Function-Declaration][] contains parameters as well. This section starts on a new line with the text: `###### Parameters:`, followed by a newline and then an unordered, list of [Property][] definitions.
+
+###### Example: A Function definition with parameters
+
+```md
+# Function: `add(x, y)`
+
+###### Parameters:
+
+- **x** - `number`
+- **y** - `number`
+
+```
+
 
 #### Function-Return-Type
 
@@ -285,22 +434,7 @@ A required field that also acts as a terminating line for the [Function-Descript
 ###### Returns: `string`
 ```
 
-#### Function-Arguments
 
-Only required if the [Function-Declaration][] contains arguments as well (referred to as `FD-Parameters` in the [grammar](#specification)). This section starts on a new line with the text: `###### Arguments:`. Following this is a unordered bulleted list of [Parameters][Parameter].
-
-###### Example: A Function definition with arguments
-
-```md
-# Function: `add(x, y)`
-
-###### Returns: `number`
-
-###### Arguments:
-- **x** - `number`
-- **y** - `number`
-
-```
 
 ---
 
